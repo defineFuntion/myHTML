@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+	*{
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	div{
+		width: 100px;
+		height: 100px;
+		position: absolute;
+		left: 0;
+		top: 0;
+		background-color: #f40;
+		border-radius: 50%;
+	}
+/*	ul{
+		width: 600px;
+		height: 70px;
+		position: relative;
+		margin:50px auto 0;
+		overflow: hidden;
+	}
+	ul li{
+		width: 148px;
+		height: 68px;
+		border:1px solid black;
+		float:left;
+		color: black;
+		text-align: center;
+		line-height: 68px;
+	}*/
+/*	ul span{
+		display: inline-block;
+		position: absolute;
+		width: 150px;
+		height: 70px;
+		left: 0;
+		top: 0;
+		background:#f40;
+		z-index: -1;
+	}*/
+	</style>
+</head>
+<body>
+	<div></div>
+<!-- 	<nav>
+		<ul>
+			<li>JavaScript</li>
+			<li>jQuery</li>
+			<li>Vue</li>
+			<li>Node</li>
+			<span></span>
+		</ul>
+	</nav> -->
+	<script type="text/javascript">
+
+	var div = document.getElementsByTagName('div')[0];
+
+	function startMove(obj){
+		clearInterval(obj.timer);
+		var x = 8,
+			y = 6,
+			g = 9,
+			u = 0.99
+		var newLeft,newTop;
+		var maxH = document.documentElement.clientHeight - obj.offsetHeight,
+			maxW = document.documentElement.clientWidth - obj.offsetWidth,
+			minH = 0,
+			minW = 0;
+
+		obj.timer = setInterval(function(){
+			y += g;
+			x *=u
+			newTop = obj.offsetTop + y ;
+			newLeft = obj.offsetLeft + x ;
+			if(newTop > maxH){
+				y *= -1;
+				newTop = maxH;
+			}
+			if(newTop < minH){
+				y *= -1;
+				newTop = minH;
+			}
+			if(newLeft > maxW){
+				x *= -1;
+				newLeft = maxW;
+			}
+			if(newLeft < minW){
+				x *= -1;
+				newLeft = minW;
+			}
+			if(Math.abs(x) <= 0.45){
+				clearInterval(obj.timer);
+				console.log('over')
+			}
+			obj.style.top = newTop + 'px';
+			obj.style.left = newLeft+ 'px';
+		},30)
+	}
+
+	div.onclick = function(){
+		startMove(this)
+	}
+
+
+
+
+
+
+
+
+
+
+	// var div = document.getElementsByTagName('div')[0];
+	// div.onclick = function(){
+	// 	startMove(this,300)
+	// }
+
+
+	// var listArray = Array.prototype.slice.call(document.getElementsByTagName('li'),0);
+	// var span = document.getElementsByTagName('span')[0];
+	// listArray.forEach(function(item,index){
+	// 	// item.addEventListener('onclick',function(){
+	// 	// 	startMove(span,item.offsetLeft);
+	// 	// })
+	// 	item.onclick = function(){
+	// 		startMove(span,this.offsetLeft)
+	// 	}
+	// })
+	// function startMove(obj,target){
+	// 	clearInterval(obj.timer);
+	// 	var isSpeend = 40,a,u = 0.8;
+	// 	obj.timer = setInterval(function(){
+	// 		a = (target - obj.offsetLeft) / 15;
+	// 		isSpeend += a;
+	// 		isSpeend *= u;	
+	// 		if(Math.abs(isSpeend) <0.5 && Math.abs(obj.offsetLeft) <0.5){
+	// 			obj.style.left = target + 'px';
+	// 			clearInterval(obj.timer);
+	// 		}else{
+	// 			obj.style.left = obj.offsetLeft + isSpeend + 'px';
+	// 		}	
+	// 	},30)
+	// }
+	</script>
+</body>
+</html>

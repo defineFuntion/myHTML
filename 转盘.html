@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>转盘</title>
+	<style type="text/css">
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	
+	.box{
+		width: 842px;
+		margin: 50px auto;
+		border: 1px solid black;
+		background-color: skyblue;
+		position: relative;
+	}
+	.box p{
+		width: 120px;
+		height: 120px;
+		border: 1px solid black;
+		background-color:gray;	
+		overflow: hidden;
+		text-align: center;
+		line-height: 120px;
+		font-size: 30px;
+		color: black;
+		position: relative;
+	}
+	.box p span{
+		display: inline-block;
+		width: 100%;
+		height: 100%;	
+		position: absolute;
+		/*background-color: white;*/
+		left: 0;
+		top: 0;
+		/*opacity: 0.5;*/
+	}
+	.box .top{
+		/*width: 100%;*/
+		display: flex;
+		-webkit-transform: rotate(180deg);
+	}
+	.box .top p{
+		margin: -1px;
+		-webkit-transform: rotate(180deg);
+	}
+	.box .left{
+		display: inline-block;
+	}
+	.box .left p{
+		display: block;
+	}
+	.box .right{
+		position: absolute;
+		right: 0px;
+		top: 120px;
+	}
+	.box .right{
+		-webkit-transform: rotate(180deg);
+	}
+	.box .right p{
+		display: block;
+		-webkit-transform: rotate(180deg);
+	}
+	.box .bottom{
+		display: flex;
+	}
+	.box .bottom p{
+		
+	}
+	.box .btn{
+		width: 200px;
+		height: 100px;
+		position: absolute;
+		left: 320px;
+		top: 200px;
+		font-size: 32px;
+		font-weight: bolder;
+		border-radius: 50%;
+		outline: none;
+		border-color:black;
+	}
+	.box .set{
+		position: absolute;
+		left: 120px;
+		top: 120px;
+		width: 600px;
+	}
+	.box .set textarea{
+		width: 100%;
+		height: 200px;
+		background: pink;
+	}
+	.box .set .btn{
+		display: block;
+		margin: 10px auto;
+	}
+	</style>
+</head>
+<body>
+
+<!-- 盒子 -->
+	<div class="box">
+	<!-- top -->
+		<div class="top">
+			<p><span>a</span></p>
+			<p><span>a</span></p>
+			<p><span>a</span></p>
+			<p><span>a</span></p>
+			<p><span>a</span></p>
+			<p><span>a</span></p>
+			<p><span>a</span></p>
+		</div>
+	<!-- left -->
+		<div class="left">
+			<p><span></span></p>
+			<p><span></span></p>
+		</div>
+	<!-- bottom -->
+		<div class="bottom">
+			<p><span></span></p>
+			<p><span></span></p>
+			<p><span></span></p>
+			<p><span></span></p>
+			<p><span></span></p>
+			<p><span></span></p>
+			<p><span></span></p>
+		</div>
+	<!-- right	 -->
+		<div class="right">
+			<p class="p1"><span></span></p>
+			<p class="p2"><span></span></p>
+		</div>
+	<!-- button -->
+		<input type="button" value="clcik" class="btn" id="btn" />
+	<!-- 输入 -->
+		<div class="set" id="set">
+			<textarea name="" id="textarea" cols="30" rows="10"></textarea>
+			<br>
+			<input type="button" value="Set" class="btn" id="btn2" />
+		</div>
+	</div>
+	<input type="text" id="text" />
+<!-- js -->
+	<script type="text/javascript">
+// button
+	var btn = document.getElementById('btn');
+	var span = document.getElementsByTagName('span');
+	var times,Times = 1;
+	var i = 0;
+	btn.onclick = function(){
+		
+		if(Times % 2 != 0){
+			times = setInterval(function(){
+				span[i].style.background = "rgba(255,255,255,0.5)";//
+				if(i == 0){
+					span[span.length - 1].style['background'] = 'rgba(255,255,255,0)';
+				}
+				if(i > 0){
+					span[i - 1].style['background'] = 'rgba(255,255,255,0)';
+				}
+				i == span.length - 1 ? i = 0 : i++;
+			},50);
+			btn.value =  "Stop";
+			btn.style.background = "red";
+			btn.style.color = 'white';
+		}else{
+			clearInterval(times);
+			btn.value = 'Start';
+			btn.style.background = 'black';
+		}
+		Times++;
+	}
+// set
+	var textarea = document.getElementById('textarea');
+	var btn2 = document.getElementById('btn2');
+	var set = document.getElementById('set');
+	btn2.onclick = function(){
+		var words = textarea.value.split(",");
+		if(words.length >= 18){
+			for(var i = 0; i < span.length; i++){
+				span[i].innerText = words[i]; 
+			}
+			set.remove();
+		}else{
+			alert("请输入18个单词，且以英文符号','隔开");
+		}
+	}
+//
+	</script>
+
+</body>
+</html>

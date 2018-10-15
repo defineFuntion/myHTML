@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>秒表</title>
+	<style type="text/css">
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	body{
+		background-image: url('../image/bg.jpg');
+		background-repeat: no-repeat;
+		background-size: 100% 100%;
+	}
+	.warp{
+		width: 100%;
+		height: 600px;
+		overflow: hidden;
+	}
+	.warp .outside{
+		width: 300px;
+		height: 300px;
+		float: left;
+		margin: 100px 68px;
+		background-color: transparent;
+		border-radius: 50%;
+		position: relative;
+	}
+	.warp .outside .inner{
+		width: 95%;
+		height: 95%;
+		background-color: #302f2f;
+		opacity: 0.6;
+		border-radius: 50%;
+		position: absolute;
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		margin: auto;
+		line-height: 18.5rem;
+	}
+	.warp .outside .inner span{
+		display: inline-block;
+		width: 100%;
+		text-align: center;
+		font-size: 50px;
+		font-weight: bolder;
+		color: white;
+		position: absolute;
+		z-index: 5;
+	}
+	.warp .outside p{
+		position: absolute;
+		bottom: -18%;
+		width: 100%;
+		text-align: center;
+		font-size: 40px;
+		color: hsla(500,0%,100%,0.8);
+	}
+
+	canvas{
+		position: absolute;
+		background:transparent;
+		z-index: 2;
+	}
+	</style>
+</head>
+<body onselectstart = 'return false'>
+
+	<div class="warp">
+		<div class="outside">
+			<canvas width='300' height="300"></canvas>
+			<div class="inner">
+				<span id='date'></span>
+			</div>
+			<p>已过<span id='percent'>50</span>%</p>
+		</div>
+		<div class="outside">
+			<canvas width="300" height="300"></canvas>
+			<div class="inner">
+				<span id='time'></span>
+			</div>
+		</div>
+		<div class="outside">
+			<canvas width='300' height="300"></canvas>
+			<div class="inner">
+				<span id='week'></span>
+			</div>
+		</div>
+		
+	</div>
+	<script type="text/javascript">
+	(function(){
+		var time = document.getElementById('time');
+		var canvas = document.getElementsByTagName('canvas')[1];
+		var cts = canvas.getContext('2d');
+		var size = 150;
+		cts.translate(size,size);
+		cts.rotate(-Math.PI / 2)
+		var timer = setInterval(init,1000);
+		var now,h,m,s;
+		var sDeg,mDeg,hDeg;
+		var pi = Math.PI;
+		function init(){
+			cts.clearRect(-size,-size,size * 2,size * 2);
+			now = new Date();
+			mon = now.getMonth();
+			h = now.getHours() % 12;
+			if(h%12==0){dateFn();weekFn();}
+			m = now.getMinutes();
+			s = now.getSeconds();
+			seconds();
+			minutes();
+			hours();
+			timeFn();
+		}
+		function timeFn(){
+			h = h < 10 ? '0'+h : h;
+			m = m < 10 ? '0'+m : m;
+			s = s < 10 ? '0'+s : s;
+			time.innerHTML = h + ':' + m + ':' + s;
+		}
+		function seconds(){
+			sDeg = s * (Math.PI / 30);
+			cts.save();
+			cts.beginPath();
+			cts.lineWidth = 5;
+			cts.strokeStyle="red";
+			cts.arc(0,0,140,0,sDeg,false);
+			cts.stroke();
+			cts.restore();
+		}
+		function minutes(){
+			mDeg = m * (pi / 30) + s * (pi / 30 / 360);
+			cts.save();
+			cts.beginPath();
+			cts.lineWidth = 5;
+			cts.strokeStyle="purple";
+			cts.arc(0,0,120,0,mDeg,false);
+			cts.stroke();
+			cts.restore();
+		}
+		function hours(){
+			hDeg = (h * (pi / 6)) + (m * (pi/6/60)) + (s * (pi/6/3600));
+			cts.save();
+			cts.beginPath();
+			cts.lineWidth = 5;
+			cts.strokeStyle="skyblue";
+			cts.arc(0,0,90,0,hDeg,false);
+			cts.stroke();
+			cts.restore();
+		}
+	})();
+	var dateFn = (function(){
+		var date = document.getElementById('date');
+		var percent = document.getElementById('percent');
+		var canvas = document.getElementsByTagName('canvas')[0];
+		var cts = canvas.getContext('2d');
+		cts.translate(150,150);
+		cts.rotate(-Math.PI / 2);
+		var now,y,m,d;
+		var yDeg,mDeg,dDeg,pi = Math.PI;
+		init();
+		function init(){
+			now = new Date();
+			y = now.getFullYear();//2018
+			m = now.getMonth() + 1;//6 + 1 7
+			d = now.getDate(); //15;
+			cts.clearRect(-150,-150,300,300);
+			day();
+			month();
+			totalDay();
+			dateFn();
+		}
+		function dateFn(){
+			m < 10? '0' + m : m;
+			d < 10? '0' + d : d;
+			date.innerHTML = y + '.' + m + '.' + d;
+		}
+		function day(){
+			//7月前单月为大月 7月后双月为大月
+			//2月28/29(闰年)
+			//其余为小月
+			//能被4和400整除 当不能被100整除
+			if((m <= 7 && m % 2 == 1) || (m > 7 && m % 2 == 0)){
+				dDeg = (pi * 2)/31;			
+			}else if(m == 2){
+				dDeg = (pi * 2)/28
+				if(y%4 == 0 && y%400 == 0 && y%100 != 0){
+					dDeg = (pi * 2)/29;
+				}
+			}else{
+				dDeg = (pi * 2) / 30;
+			}
+			cts.save();
+			cts.beginPath();
+			cts.lineWidth = 5;
+			cts.strokeStyle = 'orange';
+			cts.arc(0,0,140,0,dDeg * d,false);
+			cts.stroke();
+			cts.restore();
+		}
+		function month(){
+			mDeg = Math.PI * 2 / 12;
+			cts.save();
+			cts.beginPath();
+			cts.lineWidth = 5;
+			cts.strokeStyle = 'lime';
+			cts.arc(0,0,120,0,mDeg * m,false);
+			cts.stroke();
+			cts.restore();
+		}
+		function totalDay(){
+			var dayMill, beforeDay,allDay;
+			// （当前毫秒数-当前年份的毫秒数）/1000 / 60 / 60 / 24 过去一年所经历的天数
+			dayMill = 1000*60*60*24;
+			beforeDay = (Date.parse(now) - Date.parse(2018)) / dayMill;
+			allDay = (Date.parse(y+1) - Date.parse(y)) / dayMill;
+			yDeg = pi*2 / allDay;
+			cts.save();
+			cts.beginPath();
+			cts.lineWidth = 5;
+			cts.strokeStyle = 'pink';
+			cts.arc(0,0,90,0,yDeg * beforeDay,false);
+			cts.stroke();
+			cts.restore();
+			percent.innerHTML = ((beforeDay / allDay) *100).toFixed(2);
+		}
+		return init;
+	})();
+	var weekFn = (function (){
+		var week = document.getElementById('week');
+		var canvas = document.getElementsByTagName('canvas')[2];
+		var cts = canvas.getContext('2d');
+		cts.translate(150,150);
+		cts.rotate(-Math.PI / 36 * 23);
+		var color = ['red','orange','lime','skyblue','orangered','purple','pink'];
+		var days = ['Sun.','Mon.','Tue.','Wed.','Thur.','Fri.','Sat.']
+		var now,w,pi = Math.PI;
+		var deg,deg1;
+		init();
+		function init(){
+			now = new Date();
+			w = now.getDay();//获取
+			weeks();
+		}
+		function weeks(){
+			cts.clearRect(-150,-150,300,300);
+			deg = pi * 2 / 7;
+			deg1 = deg - Math.PI / 3.6;
+			//51.42857142857143
+			//每个定义50deg 两个圆弧之间的间隙为1.4.....
+			//350 7*1.49
+			//先逆旋转90+25 115 -Math.PI/36 * 23 = -115deg
+			//旋转50deg Math,.PI/3.6
+			//先旋转 在绘图-->旋转deg 
+			//绘图 arc(0,0,140,deg - pi/3.6,pi/3.6,false)
+			//进行循环绘图 开始次数为0	循环次数为week+1
+			//旋多少 返多少
+			week.innerHTML = days[w];
+			for(var i = 0;i <= w ;i++){
+				cts.save();
+				cts.beginPath();
+				cts.lineWidth='12';
+				cts.strokeStyle=color[i];
+				cts.arc(0,0,135,deg1,Math.PI/3.6,false);
+				cts.stroke();
+				cts.restore();
+				cts.rotate(deg);
+			}
+			cts.rotate(-deg * w)
+		}
+		return init
+	})()
+	</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	div{
+		width: 100px;
+		height: 100px;
+		background-color: orange;
+		position: absolute;
+	}
+	</style>
+</head>
+<body>
+	<div></div>
+	<script type="text/javascript">
+	//功能:点击进行拖拽 且每次打开页面时都显示上次关闭页面时方块的位置
+	(function(){
+		var div = document.getElementsByTagName('div')[0];
+		var cookieObj = {
+			setCookie:function(prop,val){
+				document.cookie = prop + '=' + val + ';max-age=100000';
+				console.log(document.cookie)
+				return this;
+			},
+			getCookie:function(prop){
+				var posArr = (document.cookie).split(';');
+				for(var i = 0; i < posArr.length;i++){
+					var pos = posArr[i].split(';')
+					if(pos[0] == prop){
+						return pos[1]
+					}
+				}
+				return 0
+			}
+		}
+		
+		div.style.left = cookieObj.getCookie("left") + 'px';
+		div.style.top = cookieObj.getCookie("top") + 'px';
+
+		div.onmousedown = function(e){
+			var initX = e.pageX,
+				initY = e.pageY,
+				initL = this.offsetLeft,
+				initT = this.offsetTop
+			document.onmousemove = function(ee){
+				div.style.left = ee.pageX - initX + initL + 'px';
+				div.style.top = ee.pageY - initY + initT + 'px';
+			}
+			document.onmouseup = function(){
+				this.onmousemove = null;
+				console.log(div.offsetLeft)
+				cookieObj.setCookie('left',div.offsetLeft).setCookie('top',div.offsetTop)
+			}
+		}
+	})()
+	</script>
+</body>
+</html>

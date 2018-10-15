@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>爱心</title>
+	<style type="text/css">
+		p{
+			background: transparent;
+			position: absolute;
+			z-index: 100;
+		}
+		.box{
+			width: 100%;
+			height: 100%;
+			background: black;
+			line-height:666px;
+		}
+		span{
+			margin: 0px;
+			font-size: 666px;
+			color: white;
+			cursor:pointer;
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<span>❤</span>
+	</div>
+	<script type="text/javascript">
+	window.onload = function(){
+		var colorArr = ["red","orange","yellow","lime","skyblue","purple","pink"];
+		var letterArr = new Array();
+		for(var i = 65; i <= 90 ;i++){
+			letterArr[i - 65] = String.fromCharCode(i);
+		}
+		function love(){
+			var win_w = 1300;
+			var win_h = 600;
+			function createlove(){
+				var lovep = document.createElement('p');
+				lovep.innerHTML = letterArr[Math.floor(Math.random() * letterArr.length)];
+				var size = 20 + parseInt(Math.random() * 30);
+				var left = parseInt(win_w * Math.random() * 0.98);
+				lovep.style.fontSize = size + 'px';
+				lovep.style.width = size + 'px';
+				lovep.style.height = size + 'px';
+				lovep.style.left = left + 'px';
+				lovep.style.color = colorArr[Math.floor(Math.random() * 7)];
+				document.body.appendChild(lovep);
+				return lovep;
+			}
+			setInterval(function(){
+				var love = createlove();
+				var sbd = Math.floor(Math.random() + 3);//下落速度：改变top值
+				var rotate = Math.floor(Math.random() * 10)
+				move(love,sbd,rotate);
+			},800);
+			function move(obj,speed,rotate){
+				var top = 0,r = 0;
+				var times = setInterval(function(){
+					top = top + speed;
+					r += rotate			
+					obj.style.top = top + 'px';
+					obj.style.transform = 'rotateZ(' + r + 'deg)';
+					if(top > win_h - 20){
+						clearInterval(times);
+					}
+				},80)
+			}
+			//清除部分p 防止文件过大！！！
+			setInterval(function(){
+				var loves =  document.getElementsByTagName('p');
+				for(var i = 0; i <　loves.length / 2; i++){
+					loves[i].parentNode.removeChild(loves[i]);
+				}
+			},5000);			
+		}
+		love();
+	}
+	</script>
+</body>
+</html>

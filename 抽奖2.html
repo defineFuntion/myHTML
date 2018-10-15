@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>抽奖模式</title>
+	<style type='text/css'>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			background-color: skyblue;
+		}
+		.box{
+			width: 850px;
+			border: 1px solid black;
+			margin:  50px auto;
+			background: skyblue;
+			position: relative;
+		}
+		.box p{
+			width: 120px;
+			height: 120px;
+			border: 1px solid black;
+			background-color: gray;
+		}
+		.box .top{
+			width: 100%;
+			height: 122px;
+			display: flex;
+			-webkit-transform: rotate(180deg);
+		}
+		.box .top p{
+			-webkit-transform:rotate(180deg);
+		}
+		.box .left{
+			width: 122px;
+		}
+		.box .bottom{
+			width: 100%;
+			display: flex;
+		}
+		.box .right{
+			width: 122px;
+			position: absolute;
+			right: 0;
+			top: 122px;
+			-webkit-transform:rotate(180deg);
+		}
+		.box .right p{
+			-webkit-transform:rotate(180deg);
+		}
+		.box p span{
+			display: inline-block;
+			width: 100%;
+			height: 100%;
+			/*background-color: white;*/
+			/*opacity: 0.5;*/
+			font-size: 26px;
+			line-height: 120px;
+			vertical-align: middle;
+			text-align: center;
+			font-weight: bolder;
+			overflow: hidden;
+		}
+		.box p span:after{
+ 
+		}
+		.box .set {
+			position: absolute;
+			left: 122px;
+			top: 122px;
+		}
+		.box .btn{
+			position: absolute;
+			left:326px;
+			top: 200px;
+		}
+		.box .btn input{
+			width: 200px;
+			height: 100px;
+			border-radius: 50px;
+			outline: 0;
+			background-color: black;
+			color: white;
+			font-size: 32px;
+			cursor: pointer;
+
+		}
+
+		.box .set textarea{
+			width: 606px;
+			height: 160px;
+			background-color: pink;	
+		}
+		.box .set input{
+			display: block;
+			margin: 10px auto;
+			width: 150px;
+			height: 80px;
+			border-radius: 50px;
+			font-size: 30px;
+			background-color: red;
+			color: white;
+			outline: 0;
+			font-family: 华文新魏;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<div class="box" id="box">
+		<div class="top">
+			<p><span></span></p>
+			<p><span></span></p>
+			<p><span></span></p>
+			<p><span></span></p>
+			<p><span></span></p>
+			<p><span></span></p>
+			<p><span></span></p>
+		</div>
+		<div class="left">
+			<p><span></span></p>
+			<p><span></span></p>
+		</div>
+		<div class="bottom">
+			<p><span></span></p>
+			<p><span></span></p>
+			<p><span></span></p>
+			<p><span></span></p>
+			<p><span></span></p>
+			<p><span></span></p>
+			<p><span></span></p>
+		</div>
+		<div class="right">
+			<p><span></span></p>
+			<p><span></span></p>
+		</div>
+		<div class="btn">
+			<input type="button" value="start" id="btn" />
+		</div>
+		<div class="set" id="set">
+			<form action="#">
+				<textarea name="" id="tArea" cols="30" rows="10"></textarea><br>
+				<input type="button" value="input" id="btn1" />
+			</form>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+	var btn = document.getElementById('btn');
+	var set = document.getElementById('set');
+	var btn1 = document.getElementById('btn1');
+	var tAera = document.getElementById('tArea');
+	var span = document.getElementById('box').getElementsByTagName('span');
+	var alpArr = new Array();//[1到17]
+	for(var i = 0; i < span.length; i++){
+		alpArr[i] = i;
+	}
+	var pos = 0 ,off = true;
+	btn.onclick = function(){
+		if(!off) return false;//判断函数是否在运行
+		off = false;
+		if(alpArr.length == 0){
+			alert('选项以全部选完，请重新开始(刷新页面)');
+			return false;
+		}
+		var p = parseInt(Math.random() * alpArr.length);
+		var all = alpArr[p] + 18 * 5;
+		var t = 0;
+		if(pos != 0){//去掉上个位置上的透明度
+			span[pos - 1].style['background'] = 'rgba(255,255,255,0)'; 
+		}
+		pos = 0;
+		var times = setInterval(function(){
+			span[pos].style['background'] = 'rgba(255,255,255,0.5)';
+			if(pos == 0){
+				span[span.length - 1].style['background'] = 'rgba(255,255,255,0)'; 
+			}
+			if(pos > 0){
+				span[pos-1].style['background'] = 'rgba(255,255,255,0)'; 
+			}
+			pos == span.length-1 ? pos = 0 : pos++;
+			if(t == all ){
+				clearInterval(times);
+				off = true;
+			}
+			else{
+				t++;
+			}
+		},50)
+		//删除数组中被选中的元素
+		alpArr.splice(p,1);
+		
+	}
+//input
+	btn1.onclick = function(){
+		var alp = tArea.value.split(',');
+		if(alp.length < span.length){
+			alert('输入的字符数不少于18个，且以英文符号“,”进行隔开');
+			return false;
+		}else{
+			set.remove();
+		}
+		for(var i = 0; i < span.length; i++){
+			span[i].innerHTML = alp[i]; 
+		}
+	}
+	</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	body{
+		height: 900px;
+		background: -webkit-linear-gradient(-90deg,black -10%,gray 80%)
+	}
+	div{
+		position: relative;
+		width: 300px;
+		height: 300px;
+		margin: 100px auto;
+		text-align: center;
+		line-height: 300px;
+		font-size: 300px;
+		font-family: "楷体"
+	}
+	div:before{
+		content: "";
+		display: inline-block;
+		width: 200px;
+		height: 200px;
+		background-color:yellow;
+		border-radius: 50%;
+		position: absolute;
+		left: 20%;
+		top: -15%;
+		z-index: -1;
+		box-shadow: 0 0 100px 5px gold;
+		-webkit-animation: change 4s linear infinite;
+	}
+	@-webkit-keyframes change{
+		0%{opacity: 0.5}
+		50%{opacity:1;}
+		100%{opacity: 0.5}
+	}
+	</style>
+</head>
+<body>
+	<div>佛</div>
+</body>
+</html>

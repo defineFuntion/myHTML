@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>雷达图</title>
+</head>
+<body>
+	<div id="radar" style="width:600px;height:300px"></div>
+	<script type="text/javascript" src='js/flotr.min.js'></script>
+	<script type="text/javascript">
+	(function(){
+		var sporters = [
+			{sporter:'zhangsan',weight:70,height:170,power:150,health:90,hunger:30},
+			{sporter:'lisi',weight:60,height:185,power:100,health:88,hunger:50},
+		];
+		var total = {weight:100,height:200,power:200,health:100,hunger:100};
+		//判断名字在数据中是否存在
+		var get_sporter = function(name){
+			for(var i = 0; i < sporters.length;i++){
+				if(sporters[i].sporter === name){
+					console.log(sporters[i]);
+					return sporters[i];
+				}
+			}
+		};
+		var sporter_data = function(name){
+			var obj = [],i = 0;
+			obj.label = name;
+			obj.data = [];
+			for(var key in total){
+				obj.data.push([i,100 * get_sporter(name)[key]/total[key]]);
+				i++;
+			}
+			return obj;
+		};
+		var labels = [
+			[0,'Weight'],
+			[1,'Height'],
+			[2,'Power'],
+			[3,'Health'],
+			[4,'Hunger']
+		];
+		Flotr.draw(
+			document.getElementById('radar'),
+			[
+				sporter_data('zhangsan'),
+				sporter_data('lisi'),
+			],
+			{
+				title:"身体素质",
+				radar:{
+					show:true,
+				},
+				grid:{
+					circular:true,
+				},
+				xaxis:{
+					ticks:labels,
+				},
+				yaxis:{
+					showLabels:false,
+					min:0,
+					max:100,
+				}
+			}
+		)
+	})()
+	</script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+	a{
+		transition:all .25s cubic-bezier(0.23,1,0.32,1);
+		text-decoration: none;
+	}
+	.demo:after{
+		box-shadow: 0 1px 16px rgba(0,0,0,0.15);
+		background:#1b1b1b;
+		position:absolute;
+		content:" ";
+		height: 10px;
+		width: 100%;
+		top: 0;
+	}
+	.list{
+		transform-style:preserve-3d;
+		text-transform: uppercase;
+		position: absolute;
+		margin-left:-140px;
+		top: 20%; 
+	}
+	.list a{
+		display: block;
+		color: #fff;
+	}
+	.list a:hover{
+		text-indent: 20px;
+	}
+	.list dt,
+	.list dd{
+		text-indent: 10px;
+		line-height: 55px;
+		background-color: #e0fbac;
+		margin: 0;
+		height: 55px;
+		width: 270px;
+		color:white;
+	}
+	.list dt{
+		/*3D特效*/
+		transform:translateZ(0.3px);
+		text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+		font-size: 15px;
+	}
+	.list dd{
+		border-top: 1px dashed rgba(0,0,0,0.2);
+		line-height: 35px;
+		font-size: 11px;
+		height: 35px;
+		margin: 0;
+	}
+	/*个性化颜色设置*/
+	.sashimi dt,
+	.sashimi dd,
+	.sashimi a{
+		background:#73cba9;
+	}
+	.maki dt,
+	.maki dd,
+	.maki a{
+		background:#e32551;
+	}
+	.nigiri dt,
+	.nigiri dd,
+	.nigiri a{
+		background:#ffc218;
+	}
+	.sashimi a:hover{
+		background-color: #61c1c9;
+	}
+	.maki a:hover{
+		background-color: #61c1c9;
+	}
+	.nigiri a:hover{
+		background-color: #61c1c9;
+	}
+	.nigiri{
+		transform:perspective(1200px) rotateY(40deg) ;
+		transform-origin:110% 25%;
+		left: 20%;
+	}
+	.maki{
+		transform:perspective(600px) rotateY(1deg) ;
+		left: 50%;
+	}
+	.sashimi{
+		transform:perspective(1200px) rotateY(-40deg);
+		transform-origin:-10% 25%;
+		left: 80%;
+	}
+	/*折叠效果*/
+	/*以每个dl都为基点？*/
+	.nigiri dd:nth-last-child(1) a{
+		transform-origin:top;
+		transform:rotateX(120deg);
+	}
+	</style>
+</head>
+<body>
+	<section class="demo">
+		<dl class="list nigiri">
+			<dt>首页</dt>
+			<dd><a href="#">国内机票</a></dd>
+			<dd><a href="#">国内机票</a></dd>
+			<dd><a href="#">国内机票</a></dd>
+			<dd><a href="#">国内机票</a></dd>
+			<dd><a href="#">国内机票</a></dd>
+			<dd><a href="#">国内机票</a></dd>
+			<dd><a href="#">国内机票</a></dd>
+			<dd><a href="#">国内机票</a></dd>
+			<dd><a href="#">国内机票</a></dd>
+			<dd><a href="#">国内机票</a></dd>
+		</dl>
+		<dl class="list maki">
+			<dt>机票</dt>
+			<dd><a href="#">我的机票</a></dd>
+			<dd><a href="#">我的机票</a></dd>
+			<dd><a href="#">我的机票</a></dd>
+			<dd><a href="#">我的机票</a></dd>
+			<dd><a href="#">我的机票</a></dd>
+			<dd><a href="#">我的机票</a></dd>
+			<dd><a href="#">我的机票</a></dd>
+			<dd><a href="#">我的机票</a></dd>
+			<dd><a href="#">我的机票</a></dd>
+			<dd><a href="#">我的机票</a></dd>
+		</dl>
+		<dl class="list sashimi">
+			<dt>酒店</dt>
+			<dd><a href="#">国内酒店</a></dd>
+			<dd><a href="#">国内酒店</a></dd>
+			<dd><a href="#">国内酒店</a></dd>
+			<dd><a href="#">国内酒店</a></dd>
+			<dd><a href="#">国内酒店</a></dd>
+			<dd><a href="#">国内酒店</a></dd>
+			<dd><a href="#">国内酒店</a></dd>
+			<dd><a href="#">国内酒店</a></dd>
+			<dd><a href="#">国内酒店</a></dd>
+			<dd><a href="#">国内酒店</a></dd>
+		</dl>
+	</section>
+</body>
+</html>

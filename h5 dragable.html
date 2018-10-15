@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        li{
+            list-style-type: none;
+            width:200px;
+            height: 20px;
+            text-align: center;
+            background: skyblue;
+            margin:10px;
+        }
+        .wrapper{
+            width:300px;
+            height: 200px;
+            background: -webkit-linear-gradient(left, red,yellow)
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li draggable="true">Vue</li>
+        <li draggable="true">React</li>
+        <li draggable="true">Angular</li>
+        <li draggable="true">jQuery</li>
+        <li draggable="true">JavaScript</li>                    
+    </ul>
+    <div class="wrapper">
+
+    </div>
+    <script>
+        var oLi = document.getElementsByTagName('li');
+        var ul = document.getElementsByTagName('ul')[0];
+        var wrap = document.getElementsByClassName('wrapper')[0];
+        oLi = [].slice.call(oLi,0);
+
+        function bindEvent(){
+            bindLiEvent();
+            removeLi();
+        }
+        function bindLiEvent(){
+            oLi.forEach(function(item,index){
+                item.addEventListener('dragstart',function(e){
+                    e.dataTransfer.setData('data',index);
+                },true)
+                item.addEventListener('dragover',function(e){
+                    e.preventDefault();
+                },true);
+                item.addEventListener('drop',function(e){
+                    var data = e.dataTransfer.getData('data');
+                    ul.insertBefore(oLi[data],this)
+                },true);
+            })
+        }
+        function removeLi(){
+            wrap.addEventListener('dragover',function(e){
+                e.preventDefault();//取消默认事件
+            })
+            wrap.addEventListener('drop',function(e){
+                var index = e.dataTransfer.getData('data');
+                oLi[index].remove();
+            })
+        }
+        bindEvent();
+    </script>
+</body>
+</html>

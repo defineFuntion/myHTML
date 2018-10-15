@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>document</title>
+<style type="text/css">
+	*{
+		margin:0;
+		padding: 0;
+	}
+	body{
+		background:skyblue;
+	}
+	.box{
+		width: 200px;
+		height: 200px;
+		margin: 50px auto;
+		transform-style: preserve-3d;	
+		/*perspective:500px;*/
+		box-shadow: 0 0 10px 3px white;
+		border-radius: 100%;
+		position: relative;
+		z-index: 20;
+	}
+	.box div{
+		width: 2%;
+		height: 2%;
+		position: absolute;
+		left:0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		margin: auto;
+		z-index: -2;
+		}
+	.box div:nth-child(1){
+		animation:rotate2 5s linear  infinite;
+	}
+	@keyframes rotate2{
+		0%{
+			transform:rotateY(0deg);
+		}
+		100%{
+			transform:rotateY(365deg);
+		}
+	}
+	.box div:nth-child(2){
+		animation:rotate3 3s linear  infinite;
+	}
+	@keyframes rotate3{
+		0%{
+			transform:rotateY(0deg);
+		}
+		100%{
+			transform:rotateY(365deg);
+		}
+	}
+	.box div:nth-child(3){
+		width: 1%;
+		height: 42%;
+		margin-top: 0px;
+		background-color: white;
+		transform:rotateY(70deg);
+	}
+	.baseBox{
+		width: 300px;
+		height: 100px;
+		margin: -20px auto;
+		position: relative;
+		perspective: 500px;
+	}
+	.baseBox div{
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		background-color: rgba(0,0,0,0.5);
+		transform-origin:top;
+		text-align: center;
+		font:50px/100px 楷体;
+	}
+	.baseBox div:nth-child(1){
+		transform:rotate3d(1,0,0,-135deg);
+		background-color: rgba(0,0,0,0.3);
+
+	}
+	.test{
+		width: 200px;
+		height: 200px;
+		background: linear-gradient(145deg, rgba(255,255,255,0.85) 0%,transparent 50%),
+					linear-gradient(0deg, rgba(255,255,255,0.85) 0%,transparent 50%);
+		border-radius: 100%;
+		position: absolute;
+		left: 563px;
+		top: 50px;
+		z-index: 50;
+	}
+	.menu{
+		width: 100px;
+		background-color: white;
+		display: none;
+		position: absolute;
+		z-index: 99;
+	}
+	.menu ul{
+		list-style: none;
+	}
+	.menu ul li{
+		padding: 5px 4px;
+		border-bottom:1px solid gray;
+		transition:all 0.8s;
+	}
+	.menu ul li:hover{
+		background-color: lime;
+		color: white;
+		padding: 5px 6px;
+	}
+</style>
+</head>
+<body>
+	<div class="box">
+		<div></div>
+		<div></div>
+		<div></div>
+	</div>
+	<div class="baseBox">
+		<div></div>
+		<div><p>软件一班</p></div>
+	</div>
+	<div class="test"></div>
+
+	<div class="menu" id="menu">
+		<ul>
+			<li><a href="wwww.baidu.com">打开</a></li>
+			<li>复制</li>
+			<li>刷新</li>
+			<li>粘贴</li>
+			<li>剪切</li>
+		</ul>
+	</div>
+<script type="text/javascript">
+	var box = document.getElementsByClassName('box')[0];
+	var div = box.getElementsByTagName('div');
+
+	function getShadow(num){
+		var angle,x,y;
+		var shadow = '0 0 0 0 transparent';
+		for(var t = 0; t < 30; t += 0.2){
+			angle = t / Math.PI;
+			x = 19.5 * (16 * Math.pow(Math.sin(t),3));
+			y = -20 * (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+			shadow += ',' + x * num + 'px ' + y * num + 'px 2px 0 red';
+		}
+		return shadow;
+	}
+	
+	div[0].style['box-shadow'] = getShadow(.27);
+	div[1].style['box-shadow'] = getShadow(.1);
+
+
+	var menu = document.getElementById('menu');
+	document.oncontextmenu = function(){
+		return false;
+	}
+	var bool = true;
+	window.onmousedown = function(e){
+		var code = e.which;
+		var x = e.clientX;
+		var y = e.clientY;
+		if(code == 1){
+			if(bool){
+				menu.style.display = 'none';
+			}
+		}
+		if(code == 3){
+			menu.style.display = 'block';
+			menu.style.left = x + 'px';
+			menu.style['top'] = y + 'px';
+		}
+	}
+	menu.onmouseover = function(e){
+		bool = false;
+			this.onmousedown = function(ee){
+				var even = e.target;
+				console.log(even);
+			}
+		}
+	menu.onmouseleave = function(){
+		bool = true;
+	}
+
+	
+	var o = (function o(){
+			var data = 1;
+			var get = function(){
+				return data;
+			}
+			return get;
+		})();
+
+
+
+
+
+</script>
+</body>
+</html>

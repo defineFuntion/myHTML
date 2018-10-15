@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>轮播图</title>
+	<style type="text/css">
+	*{
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	</style>
+</head>
+<body>
+	<script type="text/javascript" src='../js/tools.js'></script>
+	<script type="text/javascript">
+	//传递参数
+	//用一个数组进行存储  接收
+	//如果数组为空则显示
+	function init(arr){
+		createDomEle(arr);
+		bindEvent();
+	}
+
+	function createDomEle(arr){
+		var len = (arr.length && (arr.length + 1)) || 5;
+		function createEle(element,styleJson,className){
+			var cn = className || " ";
+			var ele = document.createElement(element);
+			for(var key in styleJson){
+				ele.style[key] = styleJson[key]
+			}
+			ele.className = cn;
+			return ele;
+		}
+
+		var divBoxJson = {
+				width: "400px",
+				height: "300px",
+				margin: "100px auto 0",
+				position: "relative"
+				// overflow: "hidden"
+			},
+			ulSilederJson = {
+				position: "absolute",
+				left: "0",
+				top: "0",
+				width: len * 400 + 'px',
+				height: "300px",
+				fontSize: "50px",
+				textAlign: "center",
+				lineHeight: "300px",
+			},
+			liJson = {
+				width: "400px",
+				height: "300px",
+				outline: "1px solid black",
+				float: "left"
+			},
+			imgJson = {
+				width:'100%',
+				height:'100%'
+			}
+			btnDivJson = {
+				display: "inline-block",
+				width: "30px",
+				height: "30px",
+				background:"#ccc",
+				color: "#fff",
+				textAlign: "center",
+				lineHeight: "30px",
+				position: "absolute",
+				top: "50%",
+				marginTop: "-15px",
+				cursor: "pointer",
+				opacity: "0.1"
+			},
+			pointDivJson = {
+				width: "100%",
+				height: "20px",
+				textAlign: "center",
+				position: "absolute",
+				bottom: "30px",	
+				zIndex: "2"
+			},
+			pointSpanJson = {
+				display: "inline-block",
+				width: "8px",
+				height: "8px",
+				backgroundColor: "#ccc",
+				borderRadius: "50%",
+				marginRight:"10px"
+			}
+		var div = createEle('div',divBoxJson,'box'),
+			ul = createEle('ul',ulSilederJson,'slider'),
+			leftBtnDiv = createEle('div',deepClone(btnDivJson,{left:'15px'}),'left btn'),
+			rightBtnDiv = createEle('div',deepClone(btnDivJson,{right:'15px'}),'right btn'),
+			pointDiv = createEle('div',pointDivJson,'point');
+
+		for(var i = 0;i < len;i++){
+			var li = createEle('li',liJson),
+				img = createEle('img',imgJson);
+			if(i < len - 1){
+				img.src = arr[i];	
+				img.alt = '请插入图像' + i;
+			}else{
+				img.src = arr[0];
+				img.alt = '请插入图像' + 0;
+			}
+			li.appendChild(img);
+			ul.appendChild(li);
+			if(i < len - 1){
+				var pointSpan = createEle('span',pointSpanJson);;
+				pointDiv.appendChild(pointSpan);
+			}
+		}
+		div.appendChild(ul);
+		div.appendChild(leftBtnDiv);
+		div.appendChild(rightBtnDiv);
+		div.appendChild(pointDiv);
+		document.body.appendChild(div);
+
+		Array.from(document.getElementsByClassName('btn')).forEach(function(item,index){
+			item.addEventListener('mouseenter',function(){
+				this.style["opacity"] = 0.8
+			});
+			item.addEventListener('mouseleave',function(){
+				this.style['opacity']  = 0.1
+			})
+		})
+	}
+	function bindEvent(){
+		var timer = null;
+		var slider = document.getElementsByClassName('slider')[0];
+		var oSliderArray = slider.getElementsByTagName('li');
+		var leftBtn = document.getElementsByClassName('left')[0];
+		var rightBtn = document.getElementsByClassName('right')[0];
+		var pointArray = document.getElementsByClassName('point')[0].getElementsByTagName('span');
+		var moveWidth = slider.children[0].offsetWidth;
+		var num = oSliderArray.length-1;
+		var isMove = true;
+		var index = 0;
+		//默认移动方向/left  undefined / left-right
+		//right right->left
+		leftBtn.onclick = function(){
+			autoMove('right->left');
+		}
+		rightBtn.onclick = function(){
+			autoMove('left->right');
+		}
+		Array.prototype.slice.call(pointArray,0).forEach(function(item,i){
+			item.addEventListener('click',function(){
+				if(isMove){
+					isMove = false;	
+					index = i;
+					changeIndex(index);
+					styleTransition(slider,{left:-i * moveWidth},function(){
+						timer = setTimeout(autoMove,1500);
+						isMove = true;
+					});
+				}
+			})
+		})
+		function autoMove(diretion){
+			clearTimeout(timer);
+			if(isMove){
+				isMove = false;
+				if(!diretion || diretion == 'left->right'){
+					index++;
+					if(slider.offsetLeft == -num * moveWidth){
+						slider.style.left = '0px';
+					}
+					//判断索引值
+					if(slider.offsetLeft == -(num - 1) * moveWidth){
+						index = 0;
+					}
+					changeIndex(index);
+					styleTransition(slider,{left:slider.offsetLeft - moveWidth},function(){
+						timer = setTimeout(autoMove,1500);
+						isMove = true;
+					})
+				}else if(diretion == 'right->left'){
+					if(slider.offsetLeft == 0){
+						slider.style.left = -num * moveWidth + 'px';
+						index = num - 1;
+					}
+					index--;
+					changeIndex(index);
+					styleTransition(slider,{left:slider.offsetLeft + moveWidth},function(){
+						timer = setTimeout(autoMove,1500);
+						isMove = true;
+					})
+				}
+			}
+		}
+		function changeIndex(_index){
+			for(var i = 0; i < pointArray.length;i++){
+				pointArray[i].style['backgroundColor'] = '#ccc';
+			}
+			pointArray[_index].style['backgroundColor'] = '#f40';
+		}
+		timer = setTimeout(autoMove,1500);
+	}
+	var imgArr = [];
+	init(imgArr);
+
+
+
+
+
+	</script>
+</body>
+</html>

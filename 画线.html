@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>画线</title>
+	<style type="text/css">
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	.point{
+		width: 50px;
+		height: 50px;
+		border: 1px solid red;
+		border-radius: 50%;
+		position: absolute;
+		left: 200px;
+		top: 100px;
+		background: linear-gradient(45deg,red 15%,orange,yellow,blue,darkblue,purple 85%);
+	}
+	.rotate{
+		animation: ro 5s linear infinite;
+	}
+	@keyframes ro{
+		to{
+			transform: rotate(0deg);
+		}
+		from{
+			transform:rotate(360deg);
+		}
+	}
+	button{
+		position: absolute;
+		left: 0;
+		top: 0
+	}
+	</style>
+</head>
+<body>
+	<div class="point" id="btn"></div>
+	<button>变换样式</button>
+	<canvas id='canvas'></canvas>
+<!-- 画布 -->
+	<script type="text/javascript">
+	//圆点的效果--》没有&&有 点击时有闪光的特效--》◆*5 字体大小各不相同
+	//对圆点进行背景渐变
+	//点击原点后  圆点进行旋转
+	//点击拖动圆点 出现彩虹带--》跟着鼠标的坐标进行绘制
+	//颜色会被覆盖 所以失败...
+	
+	var canvas = document.getElementById('canvas');
+	var cts = canvas.getContext('2d');
+	canvas.width = 1300 ;
+	canvas.height = 600 ;
+	// var linear = cts.createLinearGradient(10,20,10,45);
+	// linear.addColorStop(0,'red');
+	// linear.addColorStop(0.16,'orange');
+	// linear.addColorStop(0.32,'yellow');
+	// linear.addColorStop(0.48,'green');
+	// linear.addColorStop(0.64,'blue');
+	// linear.addColorStop(0.80,'darkblue');
+	// linear.addColorStop(1,'purple');
+
+	// cts.fillStyle = linear;
+	cts.fillRect(0,0,1300,600);
+	// cts.beginPath();
+	// cts.lineWidth = 30;
+	// cts.strokeStyle = linear;
+	// cts.moveTo(50,30);
+	// cts.lineTo(100,30);
+	// cts.stroke();
+	cts.fill();
+// btn
+	var startBtn,change;
+	document.getElementsByTagName('button')[0].onclick = function(){
+		change = !change;
+	}
+	
+	var btn = document.getElementById('btn');
+	btn.style.left = 200 + 'px';
+	btn.style.top = 100 + 'px';
+	var initX,initY,btnX,btnY,x,y;
+	btn.onmousedown = function(e){
+		initX = e.clientX;
+		initY = e.clientY;
+		btnX = parseInt(btn.style.left);
+		btnY = parseInt(btn.style.top);
+		startBtn = true;
+	}
+	btn.onmousemove = function(moveEvent){
+		if(startBtn){
+			btn.classList.add('rotate');
+			moveX = moveEvent.clientX;
+			moveY = moveEvent.clientY;
+			x = moveX - initX + btnX;
+			y = moveY - initY + btnY;
+			btn.style['left'] = x + 'px';
+			btn.style['top'] = y + 'px';
+			cts.beginPath();
+			cts.lineWidth = 1;
+			cts.strokeStyle = 'purple';
+			if(change){
+				cts.moveTo(x - 5,y + 30);
+				cts.lineTo(x,y + 30);
+			}else{
+				cts.moveTo(btnX,+btnY + 30);
+				cts.lineTo(x,y + 30);
+			}
+			
+			cts.stroke();
+		}
+		
+	}
+	btn.onmouseup = function(){
+		startBtn = false;
+		this.classList.remove('rotate');
+	}
+	</script>
+</body>
+</html>

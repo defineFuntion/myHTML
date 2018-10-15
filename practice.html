@@ -1,0 +1,426 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>practice</title>
+	<style type="text/css">
+	.box{
+		width: 300px;
+		height: 150px;
+		background-color: skyblue;
+		margin: 200px auto;
+		perspective:500px;
+	}
+	.box div{
+		width: 100%;
+		height: 100%;
+		background-color: gray;
+		transform:rotate3d(1,0,0,-135deg);
+		transform-origin:0 100%;
+	}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<div>
+		</div>
+
+	</div>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript">
+		// var toArray = function(obj){
+		// 	var arr = [],
+		// 		prop;
+		// 	for(prop in obj){
+		// 		if(obj.hasOwnProperty(prop)){
+		// 			arr.push(prop);
+		// 		}
+		// 	}
+		// 	return arr;
+		// }
+		// var randomItem = function randomItem(collection){
+		// 	//{} = Object.prototype
+		// 	var arr = ({}.toString.call(collection)) != '[object Array]' ? toArray(collection) : 	collection;
+		// 		return arr[Math.floor(Math.random() * arr.length)];
+		// }
+		// var obj1 = {
+		// 	a : 'a',
+		// 	b : 'b',
+		// 	c : 'c'
+		// }
+		// var arr = ['A','B','C'];
+
+
+
+
+		// Array.prototype.randomItem = function(){
+		// 	return this[~~(Math.random() * this.length)];
+		// }
+
+		//倒序
+		// Array.prototype.unsort = function(){
+		// 	var arr = this;
+		// 	return arr.sort(function(a,b){
+		// 		return b - a;
+		// 	 })
+		// }
+		//无序
+		// Array.prototype.unorder = function(){
+		// 	var arr = this;
+		// 	return arr.sort(function(a,b){return Math.random() - 0.5});
+		// }
+		//原型代理
+		// var switchProto = {
+		// 	isOn:function isOn(){
+		// 		return this.state;
+		// 	},
+		// 	toggle:function toggle(){
+		// 		this.state = !this.state;
+		// 		return this 
+		// 	},
+		// 	state: false,
+		// 	mate:{
+		// 		name : 'one'
+		// 	}
+		// };
+		// var switch1 = Object.create(switchProto);
+		// var switch2 = Object.create(switchProto);
+		
+
+		// var enemyPrototype = {
+		// 	name : 'Wolf',
+		// 	position : {
+		// 		x : 0,
+		// 		y : 0
+		// 	},
+		// 	setPosition : function setPosition(x,y){
+		// 		this.position = {
+		// 			x : x,
+		// 			y : y
+		// 		};
+		// 		return this;
+		// 	},
+		// 	health : 20,
+		// 	bite : function bite(){},
+		// 	evade : function evade(){},
+		// }
+		// var spawnEnemy = function(){
+		// 		return Object.create(enemyPrototype);
+		// 	}
+		// 	
+		
+
+		// function Car (color,direction,mph){
+		// 	var isParkingBrakeOn = false;
+		// 	this.color = color || 'skyblue';
+		// 	this.direction = direction || 0;
+		// 	this.mph = mph || 0;
+
+		// 	this.gas= function gas(amount){//气体
+		// 		amount = amount || 10;
+		// 		this.mph = amount;
+		// 		return this;
+		// 	};
+		// 	this.brake = function brake(amount){//刹车
+		// 		amount = amount || 0;
+		// 		this.mph = ((this.mph - amount) < 0 )? 0 : this.mph - amount;
+		// 		return this;
+		// 	};
+		// 	this.toggleParkingBrake = function toggleParkingBrake(){
+		// 		isParkingBrakeOn = !isParkingBrakeOn;
+		// 		return this;
+		// 	};
+		// 	this.isParked = function isParked(){
+		// 		return isParkingBrakeOn;
+		// 	}
+		// }
+
+		// var myCar = new Car();
+		
+
+
+		//对象的合并
+		// var app = {};
+		// (function (exports){
+		// 	(function (exports){
+		// 		var api = {
+		// 			modueExists:function test(){
+		// 				return true;
+		// 			}
+		// 		};
+		// 		$.extend(exports,api);
+		// 		return exports;
+		// 	})((typeof exports === 'undefined')? window : exports)
+		// })(app);
+		
+		// var a = 123;
+		// function aa(){
+		// 	console.log(this.a);//a先声明 未赋值//undefined
+		// 	var a = 456;//变量提升
+		// 	console.log(a);	//456
+		// }
+		// new aa();
+		// console.log(a);//123	
+		//随机生成20个数值（0-100）之间 将之分配到3个数组中  要求三个数组的总和相差最小
+		//把原数组的前三项分别赋给arr1,arr2,arr3 从第四项开始 比较数组的大小 把下个值付给最小的数组	
+		// var arr = [1,5,6,34,81,22,16,77,94,25,33,26,48,91,35,16,59,88,35,0];	
+		// Array.prototype.sum = function(){
+		// 	return this.reduce((a,b) => a+b);
+		// }
+
+		// Array.prototype.group = function(){
+		// 	this.sort(function(a,b){return b - a});
+		// 	var arr1 = [],arr2 = [],arr3 = [];
+		// 	var arr = [arr1,arr2,arr3];
+		// 	var len = this.length;
+		// 	arr1[0] = this[0];
+		// 	arr2[0] = this[1];
+		// 	arr3[0] = this[2];
+		// 	for(var i = 3; i < len; i++){
+		// 		var t = arr1;
+		// 		if(t.sum() > arr2.sum()){t = arr2}
+		// 		if(t.sum() > arr3.sum()){t = arr3}
+
+		// 		if(t == arr1){arr1.push(this[i])}
+		// 		if(t == arr2){arr2.push(this[i])}
+		// 		if(t == arr3){arr3.push(this[i])}
+		// 	}
+		// 	return arr;
+		// }	
+	</script>
+
+<!-- 写一串12位输以下的数字,读出这串文字的中文大写 -->
+	<script type="text/javascript">
+		//44443		四万四千四百四十三
+		//10100 	一万零一百
+		//101000	十万一千且个 十 位的数为零时 不读取&&
+		//当一个非零数字后面都为零
+		//规律 当数字大于4位数时时 
+		function read(target){
+			//判断其长度
+			//个 十 百 千 万 十万 百万 千万 亿 十亿
+			//1  2  3  4  5    6    7    8  9   10
+			var //target = num.toString(),//将number 转换成字符串 前导为0时 会自动变为8进制
+				result = '',
+				target = Number(target).toString() || 0,//将前面多余的零过滤掉
+				len = target.length,
+				n = parseInt(len/4) + 1,//判断其分段数
+				subNum = 0
+				weishu = 0;
+			if(len > 12){
+				return '数字过大，无法读取'
+			}
+
+			for(var i = 0;i < n;i++){
+				//判断分段式字符串的字符数
+				var l = (weishu == 0 ? len % 4 : 4);
+
+				var str = target.substr(subNum,l);
+				subNum += l;
+				for(var j = 0; j < l;j++){
+					//不能有连续的零存在-->
+					//先判断当前项是否为0-->是：在判断前一项是否为零 --> 是 continue 否 执行拼接   否执行拼接
+					if(trans(str[j]) == '零'){
+						if(trans(str[j - 1]) != '零'){
+							result += trans(str[j]);
+						}
+					}else{
+						result += trans(str[j]) + danWei(l - j);
+					}
+
+				}
+				//末尾为零时直接去除零
+				if(result[result.length-1] == '零'){
+					result = result.substring(0,result.length-1);
+				}
+				weishu ++;
+				//字符串长度长度大于4 且最后一个字符段不加
+				if(len > 4 && n - i != 1 ){
+					//当某个字符段中为全零时 不加
+					if(result[result.length-1] != danWei(n - i + 3 + 1)){
+						if(result[result.length-1] != danWei(n - i + 3 + 2))
+						result += danWei(n - i + 3);
+					}
+					
+				}
+			}
+			return result;
+		}
+		function trans(target){
+			switch(target){
+				case '0':
+					return '零';
+				case '1':
+					return '壹';
+				case '2':
+					return '贰';
+				case '3':
+					return '叁';
+				case '4':
+					return '肆';
+				case '5':
+					return '伍';
+				case '6':
+					return '陆';
+				case '7':
+					return '柒';
+				case '8':
+					return '捌';
+				case '9':
+					return '九';
+			}
+		}
+		function danWei(target){
+			switch(target){
+				case 1:
+					return '';
+				case 2:
+					return '拾';
+				case 3:
+					return '佰';
+				case 4:
+					return '仟';
+				case 5:
+					return '萬';
+				case 6:
+					return '亿';
+				case 7:
+					return '兆';
+			}
+		}
+
+	</script>
+
+	<script type="text/javascript">
+		//创建一个随机的数组 里面的元素也不能出现重复
+		// function randArr(startNum,endNum,len){//最小值，最大值，数组长度
+		// 	var startVal = startNum || 0;
+		// 	if(endNum < len){len = endNum};
+		// 	var arr = [];
+		// 	var value;
+		// 	for(var i = 0; i < len; i++){
+		// 		value = Math.floor(Math.random() * endNum + startVal);
+		// 		if(arr.length > 0){
+		// 			while($.inArray(value,arr) >-1){
+		// 				value = Math.floor(Math.random() * endNum + startVal);
+		// 			}
+		// 		}
+		// 		arr.push(value);
+		// 	}
+		// 	return arr;
+		// }
+	</script>
+
+<script type="text/javascript">
+	//机器人走楼梯
+	// function jqrzlt(len){
+	// 	var n = 0;
+	// 	if(len == 1 || len == 2){
+	// 		n = len;
+	// 	}
+	// 	if(len > 2){
+	// 		n = jqrzlt(len - 1) + jqrzlt(len - 2);
+	// 	}
+	// 	return n;
+	// }
+	
+
+//Set集合
+	// var set = new Set();
+	// set.add('a');
+	// set.add('z');
+	// set.add('c');
+	// var val = set.values();
+	// console.log(val.next().value);//a
+	// console.log(val.next().value);//b
+	// console.log(val.next().value);//c
+	// console.log(set.has({}));	//false
+	// console.log(set.has('a'));	//true
+//Map集合
+	// var map = new Map([['name','zhangsan'],['age','18']])
+	// map.set('sex','male');
+	// map.set('sex','female');
+	// console.log(map.size)
+	// var mapVal = map.values();
+	// console.log(mapVal.next().value)
+	// console.log(mapVal.next().value)
+	// console.log(mapVal.next().value)
+</script>
+	<script src='js/mui.js'></script>
+	<script type="text/javascript" src='js/mui.min.js'></script>
+	<script type="text/javascript">
+		// $(function(){
+		// 	$(document).ready(function(){
+		// 		// $.getJSON("Json/test.json",function(data){
+		// 		// 	var html = '121';
+		// 		// 	$.each(data,function(index,item){
+		// 		// 		html += item['id']+ ' ' +  item['name'] + ' ' + item['sex'] + ' ' + item.address + ' ' + item['age'];
+		// 		// 	})
+		// 		// 	console.log(html)
+		// 		// })
+		// 		// 
+		// 		$.ajax({
+		// 			url:"Json/test.json",
+		// 			type:"GET",
+		// 			// async:false,
+		// 			dataType:'json',
+		// 			timeout:1000,
+		// 			// cache:false,
+		// 			beforeSend:function(){
+		// 				console.log("执行")
+		// 			},
+		// 			success:function(data){
+		// 				console.log('成功');
+		// 			},
+		// 			error:function(){
+		// 				console.log('失败');
+		// 			}
+		// 		})
+		// 	})
+		// })
+
+			// mui.ajax('json/test.json',{
+			// 	dataType:'json',//服务器返回json格式数据
+			// 	type:'get',//HTTP请求类型
+			// 	timeout:10000,//超时时间设置为10秒；
+			// 	success:function(data){
+			// 		var html = ''
+			// 		data.forEach(function(item,index){
+			// 			html +=item.id + ' ' +
+			// 				   item.name + ' ' +
+			// 				   item.age + ' ' +
+			// 				   item.sex + ' ' +
+			// 				   item.address + '\n';
+			// 		})
+			// 		console.log(html)
+			// 	},
+			// 	error:function(xhr,type,errorThrown){
+			// 		console.log("失败")
+			// 	}
+			// });
+
+	</script>
+
+	<script type="text/javascript">
+		//求1-100的质数
+		// var arr = [],c = [[0,0]];
+		// var count = 0;
+		// for(var i = 1; i <= 100; i++){
+		// 	for(var j = 1;j <= Math.sqrt(i);j++){
+		// 		if(i%j==0){
+		// 			count ++
+		// 		}
+		// 	}
+		// 	// if(count == 1 ||count == 2){
+		// 	// 	arr.push(i)
+		// 	// }
+		// 	arr.push(i);
+		// 	c.push([count,Math.sqrt(i)]);
+			
+		// 	count = 0;
+		// }
+		// console.log(arr);
+		// console.log(c);
+	</script>
+</body>
+</html>

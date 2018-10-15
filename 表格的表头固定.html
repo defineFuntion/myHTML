@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>表头固定</title>
+	<style type="text/css">
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	.box{
+		width: 406.5px;
+		height: 300px;
+		border:1px solid black;
+		margin: 20px auto;
+		overflow: hidden;
+		position: relative;
+	}
+	.box table{
+		width: 100%;
+		position: absolute;
+	}
+	.box table:first-child{
+		z-index: 2;
+	}
+	.box table:nth-of-type(2){
+		top: 24px;
+	}
+	.box table tr th{
+		background:#666;
+	}
+	.box table tr:nth-of-type(even) td{
+		background:#aaa;
+	}
+	.box .scroll{
+		width: 20px;
+		height: 92%;
+		position: absolute;
+		right: 0;
+		top: 24px;
+		background-color: white;
+		opacity: 0;
+		transition:all 0.5s;
+	}
+	.box .scroll:hover{
+		opacity:0.5;
+	}
+	.box .scroll button{
+		width: 100%;
+		display: block;
+		opacity: 1
+	}
+	.box .scroll .scrollBorder{
+		width: 100%;
+		height: 85%;
+		position: relative;
+	}
+	.box .scroll .scrollBorder .slider{
+		width: 100%;
+		background-color: black;
+		position: absolute;
+	}
+	</style>
+</head>
+<body onselectstart="return false">
+	<div class="box" id="box">
+		<!-- 表头 -->
+		<table border="1" cellspacing="0">
+			<tr>
+				<th>tableHeader</th>
+				<th>tableHeader</th>
+				<th>tableHeader</th>
+				<th>tableHeader</th>
+			</tr>
+		</table>
+		<!-- content -->
+		<table border="1" cellspacing="0" id="table">
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+			<tr>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+				<td>content</td>
+			</tr>
+		</table>
+		<!-- 滚动条 -->
+		<div class="scroll">
+			<button class="up">▲</button>
+			<!-- 滚动框 -->
+			<div class="scrollBorder">
+				<!-- 滑块 -->
+				<div class="slider"></div>
+			</div>
+			<button class="down">▼</button>
+		</div>
+	</div>
+	<script type="text/javascript" src='js/jquery.js'></script>
+	<script type="text/javascript">
+	(function(){
+		var obj = {
+			box:$('#box'),
+			table:$('#table'),
+			scroll:$('.scroll'),
+			scrollBorder:$('.scrollBorder'),
+			slider:$('.slider'),
+			btn:$('button'),
+		};
+		//隐藏区域/全部区域 * 滚动框H = sliderH?
+		var sliderH = (obj.box.height() - 24) / obj.table.height()  * obj.scrollBorder.height();
+		obj.slider.css({'height': sliderH});
+		function init(){
+			clickdrap();
+			wheelScroll();
+			btnScroll();
+			mouseLeave();
+		};
+		function clickdrap(){
+			var slider = obj.slider;
+			slider.on('mousedown',function(e){
+				var initY = e.pageY,
+					initT = slider.position().top;
+				slider.on('mousemove',function(e1){
+					var newPos = e1.pageY - initY + initT;//获取滑块的top值？
+					if(newPos <= 0){
+						newPos = 0;
+					}else if(newPos >= obj.scrollBorder.height() - slider.height()){
+						newPos = obj.scrollBorder.height() - slider.height();
+					}
+					slider.css('top',newPos + 'px');
+					Scroll();
+				});
+			});
+			$('body').on('mouseup',function(e){
+					slider.off('mousemove');
+				})
+		}
+		function wheelScroll(){
+			//上为正 下为负
+			obj.box.on('mousewheel',function(e){
+				var delta = e.originalEvent.wheelDelta;
+				var Top = obj.slider.position().top;
+				if(delta > 0){
+					Top -= 10;
+					if(Top <= 0){
+						Top = 0;
+					}
+				}else{
+					Top +=10;
+					if(Top >= (obj.scrollBorder.height() - obj.slider.height())){
+						Top = obj.scrollBorder.height() - obj.slider.height();
+					}
+				}
+				obj.slider.css('top',Top + 'px');
+				obj.scroll.css('opacity',0.5);
+				Scroll();
+
+			})
+		}
+		function btnScroll(){
+			var top = obj.slider.position().top;
+			obj.btn.on('click',function(e){
+				if(e.target.className == 'up'){
+					top -= 10;
+					if(top <= 0){
+						top = 0;
+					}
+				}else{
+					top += 10;
+					if(top >= obj.scrollBorder.height() - obj.slider.height()){
+						top = obj.scrollBorder.height() - obj.slider.height();
+					}
+				}
+				obj.slider.css('top',top + 'px');
+				Scroll();
+			})	
+		}
+		function Scroll(){
+			var scale = obj.slider.position().top / (obj.scrollBorder.height() - sliderH);
+			var contentMove = scale * (obj.table.height() - obj.box.height());
+			obj.table.css('top',-(contentMove) + 'px');
+		}
+		function mouseLeave(){
+			obj.box.on('mouseleave',function(){
+				obj.scroll.css('opacity',0);
+			})
+		}
+		init();
+	})()
+	</script>
+</body>
+</html>

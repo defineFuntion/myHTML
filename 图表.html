@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="chart" style="width:600px;height:300px"></div>
+	<div id="chart1" style="width:600px;height:300px"></div>
+	<div id="line" style="width:600px;height:300px"></div>
+	<div id="pie" style="width:600px;height:300px"></div>
+	<div id="point" style="width:600px;height:300px"></div>
+	<div id="bubble" style="width:600px;height:300px"></div>
+	<div id="radar" style="width:600px;height:300px"></div>
+	<!-- [if It IE 9]><script src='js/excanvas.min.js'> <![endif]-->
+	<script type="text/javascript" src='js/flotr.min.js'></script>
+	<script type="text/javascript">
+		
+		(function(){
+			var wins = [[[0,13],[1,11],[2,15],[3,15],[4,18],[5,21],[6,28]]];
+			var years = [[0,'2006'],[1,'2007'],[2,'2008'],[3,'2009'],[4,'2010'],[5,'2011'],[6,'2012']];
+			window.onload = function(){
+				Flotr.draw(
+					document.getElementById('chart'),
+					wins,
+					{
+						bars:{
+							show:true,
+							barWidth:0.5,
+							shadowSize:0,
+							fillOpacity:1,
+							lineWidth:0
+						},
+						yaxis:{
+							min:0,			//设置纵轴的最小值
+							tickDecimals:0 //Flort中默认精确小数点后一位
+						},
+						xaxis:{
+							ticks:years
+						},
+						grid:{
+							horizontalLines:false,
+							verticalLines:false,
+						}
+					}
+				);
+			}
+		})();
+	 	(function(){
+			var wins = [[[0,13],[1,11],[2,15],[3,15],[4,18],[5,21],[6,28]]];
+			var wins2 = [[[0,28]],[[1,28]],[[2,21]],[[3,20]],[[4,19]]];
+			var teams = [[0,"MCI"],[1,'MUN'],[2,'ARS'],[3,'TOT'],[4,'NEW']];
+			window.addEventListener('load',function(){
+				Flotr.draw(
+					document.getElementById("chart1"),
+					wins2,
+					{
+						title:'这是一个测试用的柱状表',
+						colors:["#89AFD2","#1D1D1D","#DF021D","#0E204B","#E67840"],
+						bars:{
+							show:true,
+							barWidth:0.5,
+							shadwoSize:0,
+							fillOpacity:1,
+							lineWidth:0
+						},
+						yaxis:{
+							min:0,
+							tickDecimals:0
+						},
+						xaxis:{
+							ticks:teams
+						},
+						grid:{
+							horizontalLines:false,
+							verticalLines:false
+						}
+					}
+				)	
+			}
+			)
+	 	})();
+	 	(function(){
+	 		var co2 = [];
+	 		var temp = [];
+	 		var zero = [];
+	 		var c = 300;
+	 		for(var i = 1959;i<2018;i++){
+	 			c += parseFloat((Math.random() * 3).toFixed(2));
+	 			co2.push([i,c]);
+
+	 			temp.push([i,(Math.random() * 0.6 - 0.2).toFixed(2)]);
+	 			zero.push([i,0]);
+	 		}
+
+	 		Flotr.draw(
+	 			document.getElementById('line'),
+	 			[
+		 			{
+		 				data:zero,
+		 				label:'20<sup>th</sup>-Centenury Baseline Temperature',
+		 				lines:{
+		 					show:true,
+		 					lineWidth:1,
+		 				},
+		 				yaxis:2,
+		 				shadwoSize:0,
+		 				color:'red'
+		 			},
+		 			{
+		 				data:co2,
+		 				label:'Yearly Temperature Differenece(°C)',
+		 				lines:{
+		 					show:true,
+		 				},
+		 			},
+		 			{
+		 				data:temp,
+		 				label:'CO<sub>2</sub> Concentration (ppm)',
+		 				lines:{
+		 					show:true,
+		 				},
+		 				yaxis:2
+		 			}
+	 			],
+	 			{
+	 				yaxis:{
+	 					min:300,
+	 					max:400,
+	 					tickDecimals:0,
+	 				},
+	 				xaxis:{
+	 					tickDecimals:0,
+	 				},
+	 				y2axis:{
+	 					min:-0.05,
+	 					tickFormatter:function(val){return val + "°C"},
+	 					tickDecimals:2
+	 				},
+	 				grid:{
+	 					horizontalLines:false,
+	 					verticalLines:false,
+	 				}
+	 			}
+	 		)
+	 	})();
+	 	(function(){
+	 		var data = [[[0,22.4]],[[1,47.6]],[[2,30.0]]];
+	 		window.addEventListener('load',function(){
+	 			Flotr.draw(
+	 				document.getElementById('pie'),
+	 				data,
+	 				{
+	 					pie:{
+	 					show:true,
+		 				},
+		 				yaxis:{
+		 					showLabels:false,
+		 				},
+		 				xaxis:{
+		 					showLabels:false,
+		 				},
+		 				grid:{
+		 					horizontalLines:false,
+		 					verticalLines:false,
+		 				}
+	 				},
+	 			)
+	 		});
+	 	})();
+	 	(function(){
+	 		var	health_data = [];
+	 		var country = ['Australia','Austria','Belgium'];
+	 		var len = country.length;
+	 		for(var i = 0; i < 40;i++){
+	 			health_data.push({
+	 				country : country[Math.floor(Math.random() * len)],
+	 				spending : (Math.random() * 8).toFixed(1),
+	 				life : (70 + Math.random() * 15).toFixed(1) 
+	 			})
+	 		}
+	 		var data = [];
+	 		for(var i = 0; i < 40; i++){
+	 			data.push([
+	 					health_data[i].spending,
+	 					health_data[i].life
+	 				])
+	 		}
+	 		Flotr.draw(
+	 			document.getElementById('point'),
+	 			[{
+	 				data:data,
+	 				points:{
+	 					show:true,
+	 				},
+	 				color:'red',
+	 			}],
+	 			{
+	 				title:"Life Expectancy vs Health_Care Spending",//标题
+	 				subtitle:"(by country 2010 OECD data)",
+	 				xaxis:{
+	 					max:15,
+	 					title:"Spending as Percentage of GDP",
+	 					tickFormatter:function(val){return val + "%"},
+	 				},
+	 				yaxis:{
+	 					title:"Years",
+	 				},
+	 				grid:{
+	 					horizontalLines:false,
+	 					verticalLines:false
+	 				}
+	 			}
+	 		);
+	 	})();
+	 	(function(){
+	 		var katrina = [
+	 			{north:23.2,west:75.5,wind:35},
+	 			{north:24.0,west:76.4,wind:35},
+	 			{north:25.2,west:77.0,wind:45}
+	 		]
+	 		function get_points(source_array,filter_function){
+	 			var result = [];
+	 			for(var i = 0;i < source_array.length;i++){
+	 				if(
+	 					(typeof filter_function === 'undefined' )||
+	 					(typeof filter_function !== 'function') ||
+	 					filter_function(source_array[i])
+	 				){
+	 					result.push([
+	 						source_array[i].west * -1,
+	 						source_array[i].north,
+	 						source_array[i].wind
+	 					]);
+	 				}
+	 			}
+	 			console.log(result);
+	 			return result
+	 		}
+	 		Flotr.draw(
+	 			document.getElementById('bubble'),
+	 			[{
+	 				data:get_points(katrina),
+	 				bubbles:{
+	 					show:true,
+	 					baseRadius:0.3
+	 				},
+	 			}],
+	 			{
+	 				grid:{
+	 					// backgroundImage:
+	 					horizontalLines:false,
+	 					verticalLines:false
+	 				},
+	 				yaxis:{
+	 					// showLabels:false,//显示数据刻度
+	 					min:20.607,
+	 					max:33.657,
+	 				},
+	 				xaxis:{
+	 					// showLabels:false,
+	 					min:-94.298,
+	 					max:-50.586
+	 				}
+	 			}
+	 		)
+	 	})();
+	 	(function(){
+	 		var players = [
+	 			{player:"Chris Bosh",points:17.2,rebounds:7.9,assists:1.6,steals:0.8,blocks:0.8},
+	 			{player:"Shane Battier",points:5.4,rebounds:2.6,assists:1.2,steals:1.0,blocks:0.5},
+	 			{player:"LeBron James",points:28.0,rebounds:8.4,assists:6.1,steals:1.9,blocks:0.8},
+	 			{player:"Dwyane Wade",points:22.3,rebounds:5.0,assists:4.5,steals:1.7,blocks:1.3},
+	 			{player:"Mario ChaImers",points:10.2,rebounds:2.9,assists:3.6,steals:1.4,blocks:0.2},
+	 		];
+	 		var team = {
+	 			points:98.2,
+	 			rebounds:41.3,
+	 			assists:19.3,
+	 			steals:8.5,
+	 			blocks:5.3,
+	 		};
+	 		var get_player = function(name){
+	 			for(var i = 0; i < players.length; i++){
+	 				if(players[i].player === name){
+	 					return players[i];
+	 				}
+	 			}
+	 		};
+	 		var player_data = function(name){
+	 			var obj = {},i = 0;
+	 			obj.label = name;
+	 			obj.data = [];
+	 			for(var key in team){
+	 				obj.data.push([i,100 * get_player(name)[key]/team[key]]);
+	 				i++;
+	 			};
+	 			return obj;
+	 		};
+	 		var labels = [
+	 			[0,"Points"],
+	 			[1,"Rebounds"],
+	 			[2,"Assists"],
+	 			[3,"Steals"],
+	 			[4,"Blocks"]
+	 		];
+	 		Flotr.draw(
+	 			document.getElementById('radar'),
+	 			[
+	 				player_data("Chris Bosh"),
+	 				player_data("Shane Battier"),
+	 				player_data("LeBron James"),
+	 				player_data("Dwyane Wade"),
+	 				player_data("Mario ChaImers"),
+	 			],
+	 			{
+	 				title:"2010/12 Miami Heat Starting Lineup - Contribution to Team Total",
+	 				radar:{
+	 					show:true,
+	 				},
+	 				grid:{
+	 					circular:true,
+	 				},
+	 				xaxis:{
+	 					ticks:labels,
+	 				},
+	 				yaxis:{
+	 					showLabels:false,
+	 					min:0,
+	 					max:33,
+	 				}
+	 			}
+	 		)
+	 	})()
+	</script>
+</body>
+</html>

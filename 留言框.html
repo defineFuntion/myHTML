@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>留言框</title>
+	
+</head>
+<body>
+	<xml id='board' src='board.xml'></xml>
+	<table width="100%" border="1" cellpadding="0" cellspacing="0" datasrc='#board' bordercolor='#ffffff' bordercolordark='#ffffff' bordercolorlight='#96e2fa'>
+		<thead>
+			<tr>
+				<th width='12%' height="27" bgcolor="#6ac7ec">留言人</th>
+				<th width='12%' bgcolor="#6ac7ec">表情</th>
+				<th width='21%' bgcolor="#6ac7ec">电话</th>
+				<th width='55%' bgcolor="#6ac7ec">留言内容</th>
+			</tr>
+		</thead>
+		<tr>
+			<td height="27"><span datafld='person'></span></td>
+			<td ><span datafld='humor'></span></td>
+			<td ><span datafld='tel'></span></td>
+			<td ><span datafld='message'></span></td>
+		</tr>
+	</table>
+	<form action="" method="post" id="myform" name="myform">
+		<table>
+			<tr>
+				<td>留言人</td>
+				<td><input type="text" /></td>
+			</tr>
+			<tr>
+				<td>表情</td>
+				<td><input type="text" /></td>
+			</tr>
+			<tr>
+				<td>电话</td>
+				<td><input type="text" /></td>
+			</tr>
+			<tr>
+				<td>留言内容</td>
+				<td><textarea>
+					
+				</textarea></td>
+			</tr>
+			<tr>
+				<td><button onclick="addElement()">添加留言</button></td>
+				<td><button onclick="deleteFirstElement()">删除第一条留言</button></td>
+				<td><button onclick="deleteLastElement">删除最后一条留言</button></td>
+			</tr>
+		</table>
+	</form>
+	<script type="text/javascript">
+	var xmldoc = document.getElementById('board');
+	//添加留言信息
+	function addElement(){
+		var rootElement = xmldoc.documentElement;
+		//创建留言元素
+		var newBoard = xmldoc.createElement('board');
+		//添加留言人子元素
+		var person = xmldoc.createElement('person');
+		var personF = xmldoc.createTextNode(document.myform.person.value);
+		person.appendChild(personF);
+		newBoard.appendChild(person);
+		//添加表情子元素
+		var humor = xmldoc.createElement('humor');
+		var humorF = xmldoc.createTextNode(document.myform.humor.value);
+		humor.appendChild(humorF);
+		newBoard.appendChild(humor);
+		//添加电话子元素
+		var tel = xmldoc.createElement('tel');
+		var telF = xmldoc.createTextNode(document.myform.tel.value);
+		tel.appendChild(telF);
+		newBoard.appendChild(tel);
+		//添加留言信息子元素
+		var message = xmldoc.createElement('message');
+		var messageF = xmldoc.createTextNode(document.myform.message.value);
+		message.appendChild(messageF);
+		newBoard.appendChild(message);
+		//向文档中追加一条留言信息
+		rootElement.appendChild(newBoard);
+
+	}
+	function deleteFirstElement(){
+		var rootElement = xmldoc.documentElement;
+		if(rootElement.hasChildNodes()){
+			rootElement.removeChild(rootElement.childNodes.items(0));
+		}
+	}
+	function deleteLastElement(){
+		var rootElement = xmldoc.documentElement;
+		if(rootElement.hasChildNodes()){
+			rootElement.removeChild(rootElement.lastChild);
+		}
+	}
+	</script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>I LOVE YOU</title>
+</head>
+<body>
+	<div>
+		<canvas width='800px' height='500px' style='margin: 0 auto;'></canvas>
+	</div>
+
+	<script type="text/javascript">
+	var canvas = document.getElementsByTagName('canvas')[0];
+	var cts = canvas.getContext('2d');
+	cts.fillStyle = 'black';
+
+	cts.fillRect(0,0,800,500);
+	cts.translate(100,100);
+	cts.strokeStyle = 'white';
+	cts.lineWidth = 15;
+	cts.scale(0.5,0.6)
+	cts.beginPath();
+
+
+	var width = canvas.clientWidth / 2;
+	var height = canvas.clientHeight / 2 - 55;
+	var angle,x,y;
+
+	for(var t = 10; t < 6000; t += 0.2){
+		angle = t / Math.PI;
+		x = 19.5 * (16 * Math.pow(Math.sin(t),3));
+		y = - 20 * (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+		cts.moveTo(width + x,height + y);
+		cts.lineTo(width + x + 0.3,height + y + 0.3);
+	}
+	cts.stroke()	
+
+	cts.translate(310,0);
+	cts.strokeStyle = 'red';
+	cts.fillStyle = 'red';
+	cts.beginPath();
+	for(var t = 10; t < 6000; t += 0.2){
+		angle = t / Math.PI;
+		x = 19.5 * (16 * Math.pow(Math.sin(t),3));
+		y = - 20 * (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+		cts.moveTo(width + x,height + y);
+		cts.lineTo(width + x + 0.3,height + y + 0.3);
+	}
+	cts.stroke()
+
+//I love you
+		// var canvas = document.getElementsByTagName('canvas')[0];
+		// var cts = canvas.getContext('2d');
+		// cts.fillStyle = 'black';
+		// cts.fillRect(0,0,800,500);
+		// cts.strokeStyle = 'white';
+		// cts.lineWidth = 1;
+		// var i = -2,j = -2;
+		// var r,x,y;
+		// var p = Math.PI;
+		// var width = canvas.clientWidth;
+		// var height = canvas.clientHeight;
+		// var timer = setInterval(function(){
+		// 	r = p / 45 + p / 45 * i * (1 - Math.sin(p / 45 * j)) * 18;
+		// 	x = r * Math.cos(p / 45 * j) * Math.sin(p / 45 * i) + width / 2;
+		//  	y = -r * Math.sin(p / 45 * j) + height / 3;
+		//  	cts.beginPath();
+		//  	cts.moveTo(x,y);
+		//  	console.log(x + ' ' + y);
+		//  	cts.lineTo(x + 0.1,y + 0.1);
+		//  	cts.stroke();
+		//  	if(j < 90){
+		//  		j++;
+		//  	}else{
+		//  		i++;
+		//  		j = -2;
+		//  	}
+
+		//  	if(i == 89){
+		//  		clearInterval(timer);
+		//  	}
+
+		// },2);
+// cts.stroke();
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>数组筛选应用</title>
+	<style type="text/css">
+	*{
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	.wrap{
+		width: 420px;
+		height: 500px;
+		border:1px solid black;
+		margin: 50px auto;
+	}
+	.wrap .search{
+		width: 400px;
+		position: relative;
+		margin: 10px 0 0 10px
+	}
+	.wrap .search input{
+		width: 50%;
+		height: 30px;
+		outline: none;
+	}
+	.wrap .search .sex{
+		position:absolute;
+		right: 0;
+		top: 0;
+	}
+	.wrap .search .sex li{
+		float: left;
+		height: 30px;
+		border:1px solid orange;
+		padding: 0 10px;
+		line-height: 30px;
+		color: #ccc;
+		margin-right: 5px
+	}
+	.wrap .search .sex li.active{
+		background-color: #f40
+	}
+	.wrap .search .sex li:hover{
+		border:1px solid #ccc;
+		color:#f40;
+	}
+	.wrap .list{
+		width: 400px;
+		padding: 0 0 0 10px
+	}
+	.wrap .list li{
+		height: 40px;
+		margin-top: 5px;
+		border:1px solid #ccc;
+	}
+	.wrap .list li img{
+		width: 40px;
+		height: 40px;
+	}
+	.wrap .list li span{
+		display: inline-block;
+		width: 160px;
+		height: 40px;
+		text-align: center;
+		line-height: 40px;
+		vertical-align: top;
+	}
+		
+
+		
+	</style>
+</head>
+<body>
+	<div class="wrap">
+		<div class="search">
+			<input type="text" placeholder='请输入查询的字段' id="oIn">
+			<ul class="sex">
+				<li sex='all' class="active">All</li>
+				<li sex='male'>Male</li>
+				<li sex='female'>Female</li>
+			</ul>
+		</div>
+		<div class="list">
+			<ul id="list">
+				
+			</ul>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+	var person = [
+		{name:"张三",sex:"male",info:"这是介绍来着",img:'1.jpg'},
+		{name:"李四",sex:"male",info:"这是介绍来着",img:'1.jpg'},
+		{name:"王五",sex:"female",info:"这是介绍来着",img:'1.jpg'},
+		{name:"赵六",sex:"male",info:"这是介绍来着",img:'1.jpg'},
+		{name:"小红",sex:"female",info:"这是介绍来着",img:'1.jpg'},
+		{name:"小明",sex:"male",info:"这是介绍来着",img:'1.jpg'},
+	]
+	var oUl = document.getElementById('list');
+	var oIn = document.getElementById('oIn');
+	var btn = document.getElementsByClassName('sex')[0];
+	render(person);
+	function render(list){
+		var html = '';
+		list.forEach(function(item,index){
+			html += '<li><img src="../image/' + item.img + '" alt="">\
+			<span>'+ item.name +'</span>\
+			<span>'+ item.info +'</span></li>'
+		})
+		oUl.innerHTML = html;
+	}
+	oIn.oninput = function(){
+		state.text = this.value;
+		// render( filterText(text,person) );
+		render(addFn(filterFn,person))
+	}
+	function filterText(text,arr){
+		return fArr = arr.filter(function(item,index){
+			if(item.name.indexOf(text) !== -1){
+				return true;
+			}
+		})
+	}
+	btn.addEventListener('click',function(e){
+		// console.log(e.target.tagName)
+		if(e.target.tagName == 'LI'){
+			state.sex = e.target.getAttribute('sex');
+			document.getElementsByClassName('active')[0].className = ' ';
+			e.target.className = 'active';
+			// render(filterSex(sex,person))
+			render(addFn(filterFn,person))
+		}
+	});
+	function filterSex(sex,arr){
+		if(sex == 'all'){
+			return arr;
+		}else{
+			return arr.filter(function(item,index){
+				if(item.sex == sex){
+					return true;
+				}
+			})
+		}
+	}
+
+	var filterFn = {
+		text:filterText,
+		sex:filterSex
+	},
+	state = {
+		text:'',
+		sex:'all'
+	}
+	function addFn(filter,all){
+		var lastArr = all;
+		for(var prop in filter){
+			lastArr = filter[prop](state[prop],lastArr);
+		}
+		return lastArr
+	}
+
+
+
+	function a(a){
+		var a = 123;
+		function  a(){return 1};
+		console.log(a)//123
+	}
+	a(1)
+	var a = 234;
+
+	</script>
+</body>
+</html>

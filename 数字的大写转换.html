@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	div.wrapper{
+		text-align: center;
+		margin-top: 200px;
+	}
+	input{
+		width: 500px;
+		height: 50px;
+		font-size: 20px;
+		margin: 20px;
+	}
+	button{
+		width: 150px;
+		height: 50px;
+		font-size: 20px;
+	}
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+	<div>
+		<label for="lower">小写金额：</label><input type="text" id="lower" placeholder="小写金额">
+	</div>
+		<button id="btn">转化</button>
+	<div>
+		<label for="upper">大写金额：</label><input type="text" id="upper" disabled> 
+	</div>
+	</div>
+	<script type="text/javascript">
+	var btn = document.getElementById('btn'),
+		lower = document.getElementById('lower'),
+		upper = document.getElementById('upper');
+	btn.onclick = function(){
+		upper.value = changeNum(lower.value)
+	}
+
+	function changeNum(num){
+		num = removeZero(num)
+		if(num.length > 32){
+			return '数额过大！'
+		}
+		// var numArr = Number(num).toString().split('');
+		var numArr = num.split('');
+		var nowArr = [];
+		var result = '';
+		while(numArr.length > 4){
+			nowArr.push(numArr.splice(-4))
+		}
+		if(numArr.length <= 4){
+			nowArr.push(numArr);
+		}
+		var isZero = '';
+		var flag = true;
+		var nowArrLen = nowArr.reverse().length - 1;
+		console.log(nowArr)
+		for(var i = 0; i <= nowArrLen;i++){
+			var len = nowArr[i].length;
+			var count = 0;
+			for(var j = 0; j < len; j++){
+				if(nowArr[i][j] == 0){
+					isZero = '零';
+					count++;
+					continue;
+				}else{
+					result += isZero + getNum(nowArr[i][j]) + unit(len - j);
+					isZero = '';
+				}
+			}
+			var val = nowArrLen - i;
+			if(count != 4){//子数组中零的个数小于4个 则有大单位
+				// 分三个阶层 万 亿 兆
+				if(val % 2 == 1){
+					result += unit(5);
+				}else if(val == 2 || val == 6){
+					result += unit(6)
+				}else if(val == 4){
+					result += unit(7)
+					flag = false
+				}	
+			}else{
+				if(val == 6){
+					result += unit(6);
+					console.log(111)
+				}
+				if(flag){
+					if(val == 4){
+						result += unit(7)
+						flag = false;
+					}else if(val == 2){
+						result += unit(6)
+						flag = false;
+						console.log(222)
+					}
+
+				}
+			}
+		}
+		return result;	
+	}
+	function getNum(target){
+			switch(target){
+				case '0':
+					return '零';
+				case '1':
+					return '壹';
+				case '2':
+					return '贰';
+				case '3':
+					return '叁';
+				case '4':
+					return '肆';
+				case '5':
+					return '伍';
+				case '6':
+					return '陆';
+				case '7':
+					return '柒';
+				case '8':
+					return '捌';
+				case '9':
+					return '九';
+			}
+	}
+	function unit(target){
+		switch(target){
+			case 1:
+				return '';
+			case 2:
+				return '拾';
+			case 3:
+				return '佰';
+			case 4:
+				return '仟';
+			case 5:
+				return '萬';
+			case 6:
+				return '亿';
+			case 7:
+				return '兆'
+		}
+		//万 : 5  7  9
+		//亿 : 6  
+	}
+	function removeZero(str){
+		var i = 0;
+		while(str[i] == 0){
+			i++;
+		}
+		return str.slice(i);
+	}
+
+
+
+	//一行一行的读
+	//当前的值为0 上个值为0不读 result[] == '零'
+	//数组的最后一位为0 不读 大单位要写
+	//整个小数组都为0 不读 大单位不写 		记录通过次数 大于1 则有大单位
+	//
+	//
+	</script>
+</body>
+</html>

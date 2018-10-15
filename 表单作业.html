@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>表单</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		.formBox{
+			width: 500px;
+			margin: 0px auto;
+			background-color: gray;
+			overflow: hidden;
+			padding-top: 5px;
+			border-radius: 10px;
+		}
+		h1{
+			text-align: center;
+		}
+		fieldset{
+			width: 100%;
+			border: none;
+			/*h1-h5 p div   display block inline-block*/
+			/*span a */
+		}
+		.formBox li{
+			background-color: white;
+			margin: 10px;
+			position: relative;
+			padding: 5px;
+			border-radius: 5px;
+		}
+		.formBox li .username{
+			width: 110px;
+		}
+		.formBox li .age{
+			width: 60px;
+			text-align: right;
+		}
+		.formBox fieldset label{
+			width: 30%;
+			display: inline-block;
+			text-align: center;
+			font-style: italic;
+			font-weight: bold;
+			font-family: 楷体;
+		}
+		.formBox fieldset p{
+			display: inline-block;
+			width: 60%; 
+		}
+		.formBox fieldset input{
+			display: block;
+			margin: 0 auto;
+		}
+		.formBox fieldset output{
+			position: absolute;
+			right: 100px;
+		}
+		.formBox .btn input{
+			display: block;
+			margin: 0 auto;
+			margin-top: 10px;
+			width: 65px;
+			font-size: 20px;
+			border-radius: 15px;
+			outline: 0;
+			background-color: black;
+			color: white;
+			border: none;
+		}
+	</style>
+</head>
+<body>
+	<h1>注册表单</h1>
+	<div class="formBox">
+		<form action="" id="regFrom" onsubmit="return chkForm();" method="post">
+			<fieldset>
+				<ol>
+					<li>
+						<label for="username">用户昵称：</label>
+						<p><input type="text" id="username" class="username" name="username" autofocus required/></p>
+					</li>
+					<li>
+						<label for="usemail">Email：</label>
+						<p><input type="mail" id="usemail" name="usemail" required placeholder="example@domain.com" /></p>
+					</li>
+					<li>
+						<label for="workAge">工作年龄：</label>
+						<p><input type="range" id="workAge"max="60" min="18" name="range" /></p>
+						<output id="outPut">30</output>
+					</li>
+					<li>
+						<label for="age">年龄：</label>
+						<p><input type="number" class="age" id="age"required placeholder="you age"  min="1"/></p>
+					</li>
+					<li>
+						<label for="birthday">出生日期：</label>
+						<p><input type="date" id="birthday"  /></p>
+					</li>
+					<li>
+						<label for="search">个人主页：</label>
+						<p><input type="url" id="search" required list="searchList"/></p>
+						<datalist id="searchList">
+							<option label="Google" value="http://www.google.com"></option>
+							<option label="Yahoo" value="http://www.yahoo.com"></option>
+							<option label="Bing" value="http://www.bing.com"></option>
+							<option label="Baidu" value="http://www.baidu.com"></option>
+						</datalist>
+					</li>
+				</ol>
+			</fieldset>
+			<div class="btn">
+				<input type="submit" value="注册" />
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript">
+	var workAge = document.getElementById('workAge');
+	var outPut = document.getElementById('outPut');
+	workAge.onclick = function(){
+		workAge.onmousemove = function(){
+			outPut.value = workAge.value;
+		}
+	}	
+	</script>
+</body>
+</html>

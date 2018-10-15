@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.box{
+			width: 600px;
+			height: 400px;
+			border:1px solid black;
+			margin:50px auto;
+			position: relative;
+			/*景深*/
+			perspective:800px;
+			/*3d转换*/
+			transform-style:preserve-3d;
+			transform:rotateX(36.7deg);
+			box-shadow: 0px 5px 10px 0 gray;
+		}
+		.box div{
+			width: 50%;
+			height: 100%;
+			/*background-color: gray;*/
+			position: absolute;
+			top: 0;
+			right: 0;
+			border-left:1px solid black;
+			transform-origin:left;
+			transform:rotateY(0deg);
+			transform-style:preserve-3d;
+		}
+		.box div p{
+			display: inline-block;
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			left: 0;
+			top: 0;
+			font-size: 150px;
+			text-align: center;
+			line-height: 400px;
+			font-family: "楷体"
+		}
+		.box div p:nth-of-type(1){
+			background-color: red;
+		}
+		.box div p:nth-of-type(2){
+			background-color: orange;
+			transform:translateZ(-1px) scaleX(-1);
+
+		}
+		.box div p img{
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+		.box div.on{
+			transform:rotateY(-180deg);
+			box-shadow: 3px 2px 10px 0 gray;
+		}
+		.box div:nth-of-type(1).on{
+			transition:transform 4s linear;
+		}
+		.box div:nth-of-type(2).on{
+			transition:transform 4s linear 3s;
+		}
+		.box div:nth-of-type(3).on{
+			transition:transform 4s linear 6s;
+		}
+		.box div:nth-of-type(4).on{
+			transition:transform 4s linear 9s;
+		}
+		.box div:nth-of-type(5).on{
+			transition:transform 4s linear 12s;
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<div>
+			<p>阳</p>
+			<p><img src="../image/班级照.jpg" alt=""></p>
+		</div>
+		<div>
+			<p>祝</p>
+			<p>你</p>
+		</div>
+		<div>
+			<p>们</p>
+			<p>逢</p>
+		</div>
+		<div>
+			<p>考</p>
+			<p>必</p>
+		</div>
+		<div>
+			<p>胜</p>
+			<p>✌</p>
+		</div>
+	</div>
+	<script type="text/javascript">
+	var box = document.getElementsByClassName('box')[0];
+	var L = box.getElementsByTagName("div");
+	var len = L.length;
+	box.onclick = change;
+	function change(){
+		for(var i = 0;i < len; i++){
+			L[i].style['z-index'] = len - i;
+			L[i].classList.add("on");
+			(function(i){
+				L[i].addEventListener("transitionend",function(){
+					setTimeout(function(){
+						L[i].classList.remove('on');
+					},3000)
+					if(i == len - 1){
+						setTimeout(function(){
+							change()
+						},4000)
+					}
+				})
+			})(i)
+		}
+	}
+	</script>
+</body>
+</html>

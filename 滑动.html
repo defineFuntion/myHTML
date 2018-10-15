@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		*{
+			margin:0;
+			padding:0;
+			list-style: none;
+		}
+		.box{
+			width:300px;
+			height: 53px;
+			margin: 20px auto;
+			border:1px solid black;
+			overflow: hidden;
+			position: relative;
+		}
+		.box ul{
+			width: 300%;
+			background-color: red;
+			height: 100%;
+			position: absolute;
+			left: 0;
+		}
+		.box ul li{
+			width: 40px;
+			padding: 5px;
+			background-color: skyblue;
+			text-align: center;
+			position: absolute;
+			top:0;
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<ul>
+			<li>这是li1</li>
+			<li>这是li2</li>
+			<li>这是li3</li>
+			<li>这是li4</li>
+			<li>这是li5</li>
+			<li>这是li6</li>
+			<li>这是li7</li>
+			<li>这是li8</li>
+			<li>这是li9</li>
+			<li>这是li10</li>
+		</ul>
+	</div>
+</body>
+
+<script type="text/javascript">
+	
+(function(){
+	var oLi = document.getElementsByTagName('li'),
+		liArr = Array.prototype.slice.call(oLi),//将类数组转换为数组
+		ul = document.getElementsByTagName('ul')[0];
+
+	liArr.forEach(function(item,index){
+		item.style.left = 60 * index + 'px';
+	})
+	slider(ul,liArr)
+})()
+function slider(dom,domChild){
+	var initX,initL,disX;
+	var timer;
+	isDown = true;
+	
+	var endLi = domChild[domChild.length - 1];
+		//最大移动位移 = 最后一个li元素的Left + li元素的宽度 - box的宽度
+		endPos = endLi.offsetLeft + endLi.offsetWidth - dom.parentNode.offsetWidth;
+	dom.addEventListener('mousedown',function(e){
+		clearInterval(timer);
+		var _this = this;
+		initX = e.clientX;
+		initL = this.offsetLeft;
+		isDown = true;
+		this.addEventListener('mousemove',function(me){
+			if(isDown){
+				var L = _this.offsetLeft;
+				if(L > 0 || L < -endPos){//0~-171
+				 	isDown = false;
+				 	if(L > 0){_this.style.left = '0px';}
+				 	if(L < -endPos){_this.style.left = -endPos + 'px';}
+				}
+				if(isDown){
+					//新坐标 = 鼠标移动位置 - 鼠标点击位置 + 点击前的元素坐标
+					disX = me.clientX - initX;
+					_this.style.left = disX + initL + 'px';	
+				}				
+			}		
+		})			
+	})
+	dom.addEventListener('mouseup',function(e){
+		isDown = false;
+		var _this = this,
+			newX = 0,L;
+		clearInterval(timer);
+		timer = setInterval(function(){
+			disX *= 0.8;//出现负值 无线接近于0 
+			newX += disX;
+			L = newX + initL;
+			if(L < 0 && L > -endPos){//0 ~ -endPos
+				if(L > 0){newX = initX = 0}
+				if(L < -endPos){newX = -endPos;initX = 0}
+				// console.log(L)
+				_this.style.left =newX + initL + 'px';
+			}
+		},20)
+	})
+}
+	
+	document.onselectstart = function(){return false;}
+</script>
+</html>

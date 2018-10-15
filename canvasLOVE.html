@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	.box{
+		width: 800px;
+		height: 500px;
+		border:1px solid black;
+		margin: 50px auto;
+	}
+	</style>
+</head>
+<body>
+
+<div class="box">
+	<canvas width='800' height= '500'> </canvas>
+</div>
+
+
+
+
+<script >
+// 
+
+ var box = document.getElementsByClassName('box')[0];
+
+ var r,x,y;
+ var p = Math.PI;
+
+ var color = ['red','orange','yellow','blue','lime','skyblue','purple'];
+ var n = 0;
+ setInterval(function(){
+ 	n < color.length ? n++: n = 0;
+
+	 var canvas = document.getElementsByTagName('canvas')[0];
+	 var context = canvas.getContext('2d');
+ 	 var width = canvas.clientWidth;
+ 	 var height = canvas.clientHeight;
+	 context.save();
+
+	 context.fillStyle = 'black';
+	 context.fillRect(0,0,800,500);
+	 context.translate(0,-100);
+	 context.strokeStyle = color[n];
+	 context.lineWidth = 1;
+	 context.beginPath();
+
+	 
+	 // context.moveTo(20,20);
+	 // context.lineTo(20,20);
+	 for(var i = -10; i <= 180 ; i++){
+	 	for(var j = -10; j < 180 ; j++){
+	 		r = p / 45 + p / 45 * i * (1 - Math.sin(p / 45 * j)) * 18;
+	 		x = r * Math.cos(p / 45 * j) * Math.sin(p / 45 * i) + width / 2;
+	 		y = -r * Math.sin(p / 45 * j) + height / 3;
+
+	 		context.moveTo(x,y);
+	 		context.lineTo(x+0.1,y+0.1);
+	 	}
+	 }
+	 context.stroke();
+	 context.restore();
+},500);
+
+
+//克隆
+	// 	var obj = {
+	// 		name : '123',
+	// 		age : 12,
+	// 		sex : "male",
+	// 		arr : ['zhangshang','lisi'],
+	// 		o : {
+	// 			oname : 'qwe',
+	// 			oarr : ['wangwu']
+	// 		}
+	// 	}
+	// 	var obj1 = {}
+
+
+// //深度克隆
+	// 	function deepClone(origin,target){
+	// 		var target = target || {},
+	// 			toStr = Object.prototype.toString,
+	// 			arrStr = '[object Array]';
+	// 		for(var prop in origin){
+	// 			if(origin.hasOwnProperty(prop)){
+	// 				if(origin[prop] !== 'null' && typeof(origin[prop]) == 'object'){
+	// 					if(toStr.call(origin[prop]) == arrStr){
+	// 						target[prop] = [];
+	// 					}else{
+	// 						target[prop] = {};
+	// 					}
+	// 					//target[prop] = toStr.call(origin[prop]) == arrStr ? [] : {}
+	// 					deepClone(origin[prop],target[prop]);
+	// 				}else{
+	// 					target[prop] = origin[prop];
+	// 				}
+	// 			}
+	// 		}
+	// 		return target;
+	// 	}
+
+	// 	deepClone(obj,obj1);
+
+//数组办法
+//数组去重
+	// var arr = [1,2,31,2,1,2,1,2,1,2,1,2,1,2,];
+
+	// Array.prototype.unique = function(){
+	// 	var obj = {},
+	// 		arr = [],
+	// 		len = this.length;
+	// 	for(var i = 0 ; i < len; i++){
+	// 		if(!obj[this[i]]){
+	// 			obj[this[i]] = 'a';
+	// 			arr.push(this[i]);
+	// 		}
+	// 	}
+	// 	return arr;
+	// }
+
+//浅程克隆
+	// function clone(Origin,Target){
+	// 	var Target = Target || {};
+	// 	for(var prop in Origin){
+	// 		if(Origin.hasOwnProperty(prop)){
+	// 			Target[prop] = Origin[prop];
+	// 		}
+	// 	}
+	// 	return Target;
+	// }
+
+	// clone(obj,obj1);
+
+
+
+
+	</script>
+</body>
+</html>

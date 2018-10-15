@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>饼图</title>
+	<style type="text/css">
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	</style>
+</head>
+<body>
+	<canvas id='canvas' style="background:pink" width='800' height='600'></canvas>
+	<script type="text/javascript">
+	var canvas = document.getElementById('canvas');
+	var color = ['red','orange','skyblue','yellowgreen','purple','cyan'];
+	var alert = true;
+	var cts = canvas.getContext('2d');
+	//先平移原点 再旋转原点
+	
+	cts.translate(350,250);
+
+	setInterval(function(){
+		alert = !alert;
+		cts.clearRect(-60,-60,120,120);
+		if(alert){
+			for(var i = 0; i < 6; i++){
+				cts.save();
+				cts.beginPath();
+				cts.lienWidth = 2;
+				cts.rotate(Math.PI * i / 3);
+				cts.moveTo(5,5);
+				cts.arc(5,5,50,0,Math.PI / 3,false);
+				cts.fillStyle = color[i];
+				cts.closePath();
+				cts.stroke();
+				cts.fill();
+				cts.restore();
+			}
+		}else{
+			for(var i = 0; i < 6; i++){
+				cts.save();
+				cts.beginPath();
+				cts.lienWidth = 2;
+				cts.rotate(Math.PI * i / 3);
+				cts.moveTo(0,0);
+				cts.arc(0,0,50,0,Math.PI /3 ,false);
+				cts.fillStyle = color[i];
+				cts.closePath();
+				cts.stroke();
+				cts.fill();
+				cts.restore();
+			}
+		}
+	},500)
+		
+
+
+
+
+	
+	
+
+
+
+//0 60 120 180 240 300 
+	</script>
+</body>
+</html>

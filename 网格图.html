@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>网格图</title>
+</head>
+<body>
+	<div>
+		<canvas id='canvas' width='600' height='400' style='background:black'></canvas>
+	</div>
+	<script type="text/javascript">
+		var canvas = document.getElementById('canvas');
+		
+		function Draw(dom){
+			this.canvas = dom;
+			this.cts = dom.getContext('2d');
+			this.x = this.canvas.offsetWidth;
+			this.y = this.canvas.offsetHeight;
+			this.n = 0;
+			this.degs = this.deg = Math.PI / 90;
+			this.cellSize = 10;
+			// this.line = [this.x-100,this.y/2];
+			this.line = [];
+			this.init(this.cts);
+			this.grid.visible = true;//是否显示网格	默认为显示||true	
+			this.grid.visibleX = true;//X轴是否显示
+			this.grid.visibleY = true;//y轴是否显示
+			this.lineColor = 'red';s
+		}
+		Draw.prototype.init=function(){
+			var _this = this,
+				cts = _this.cts;
+			this.line.push([this.x - 100,(this.y/2 + Math.cos(this.degs) * (this.n%4==0? -100 : 100) * Math.random())])
+			cts.clearRect(-this.n,0,this.x,this.y);
+			this.grid(cts);
+			this.createLine(cts);
+			this.x+=4;
+			this.n+=2;
+			this.degs +=this.deg;
+			// this.line.push([this.x-100,(this.y*0.2)+Math.random()*(this.y*0.8)])//随机高度		
+			window.requestAnimationFrame(function(){_this.init()});
+			// setTimeout(function(){
+			// 	_this.init();
+			// },200);
+		}
+		Draw.prototype.grid=function(cts){
+			if(!this.grid.visible){
+				return
+			}
+			cts.save();
+			cts.beginPath();
+			cts.translate(-this.n,0);
+			cts.lineWidth=0.5;
+			cts.strokeStyle='lime';
+			for(var i = 0; i < this.x;i+=this.cellSize){
+				if(this.grid.visibleX){
+					cts.moveTo(i,0);
+					cts.lineTo(i,this.y);
+				}
+				if(this.grid.visibleY && i<this.y){
+					cts.moveTo(0,i);
+					cts.lineTo(this.x,i);
+				}
+			}
+			cts.closePath();
+			cts.stroke();
+			cts.restore();
+		}
+		Draw.prototype.createLine=function(cts){
+			var len = this.line.length;
+			cts.save();
+			cts.beginPath();
+			cts.translate(-this.n,0);
+			cts.lineWidth=2;
+			cts.strokeStyle = this.lineColor;
+			cts.moveTo(this.line[0][0],this.line[0][1]);
+			for(var i = 0;i<len;i++){
+				cts.lineTo(this.line[i][0],this.line[i][1]);
+			}
+			cts.stroke();
+			cts.restore();
+		}
+		var d = new Draw(canvas);
+		d.grid.visible = true;
+		d.lineColor = 'lime'
+	</script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>文字输出</title>
+	<style type="text/css">
+	body{
+		height: 677px;
+		background-color: black
+	}
+	.code{
+		width: 200px;
+		height: 200px;
+		border: 1px solid black;
+	/*	column-count:10;
+		column-rule: 1px solid red;
+		column-gap:10px;*/
+		color: white;
+		/*transform:rotate(45deg);*/
+	}
+	.box{
+		width: 300px;
+		height: 300px;
+		-webkit-text-fill-color:transparent;
+		font-size: 200px;
+		/* background:url('../image/1.jpg'); */
+		background-size: cover;
+		-webkit-background-clip: text;
+	}
+	.box p{
+		margin: 0;
+		/*animation:play 5s linear infinite;*/
+		
+	}
+	@keyframes play{
+		from{
+			transform:rotate(0deg);
+		}
+		to{
+			transform:rotate(360deg);
+		}
+	}
+
+	</style>
+</head>
+<body>
+	<h1 id="idName" style="color:white"></h1>
+	<div class="code" id="code">
+		<span>太脏!C罗场上被连续恶意犯规 直接冲脚踝 <br>
+首次披露!辽宁两个"大老虎"是被谁揪出的?  <br>
+主创拍四年没拿工资 央视纪录片口碑炸裂  <br>
+女子疑被网约车司机杀害 警方抓获嫌疑人  <br>
+两男子跳地铁站台躺铁轨间 被"吞"进火车</span>
+	</div>
+	<div class="box">
+		<p>❉</p>
+	</div>
+	<script type="text/javascript" src='../js/jquery.js'></script>
+	<script>
+
+
+	function read(){
+		var code = document.getElementById('code');
+		var str = code.innerHTML;
+		var progress = 0;
+		var len = str.length;
+		var timer = setInterval(function(){
+			var count = str.substr(progress,1);//从str字符串中获取从progress开始的一个字符长度的字符串
+			progress = (count == '<' ? str.indexOf('>',progress) : progress + 1);
+			code.innerHTML = str.substring(0,progress) + (progress % 2 ? '_':'');
+			if(progress >= len){
+				clearInterval(timer);
+			}
+		},200)
+	}
+
+	read();	
+	
+	
+
+		var minSize = 5,
+			maxSize = 50,
+			createSnowTime = 100,
+			Wh = $(window).height(),
+			Ww = $(window).width() - 50,
+			snow = $("<div class='xh'></div>").css({'position':'absolute','top':'0px'}).html('❉');
+		setInterval(function(){
+			//大小 开始位置 透明度 速度 停止位置  停止时透明度 旋转
+			var size = minSize + Math.random()*maxSize,
+				starLeft = Math.random() * Ww,
+				straOpacity = 0.7 + Math.random() * 0.3,
+				endLeft = Math.random() * Ww,
+				endTop = Wh - 100,
+				snowSpeed = 5000 + Math.random() * 3000;
+			snow.clone().appendTo($("body")).css({
+				"left":starLeft,
+				'color':'white',
+				'font-size':size,
+				'opacity':straOpacity,
+				'transform':'rotate(0deg)'//旋转不好用？
+			}).animate({
+				"left":endLeft,
+				"top":endTop,
+				"opacity":0.05,
+				"transform":'rotate(45deg)'
+			},snowSpeed,function(){
+				$(this).remove()
+			});
+
+
+
+		},createSnowTime);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</script>
+</body>
+</html>
